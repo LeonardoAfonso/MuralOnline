@@ -17,13 +17,72 @@ import java.util.Random;
  * Created by Leonardo Afonso on 4/25/2016.
  */
 public class Aviso {
-    CardView cv;
-    ImageView img;
-    RelativeLayout rl;
-    TextView tvTitulo;
-    TextView tvConteudo;
-    TextView tvData;
 
+    private String titulo;
+    private String conteudo;
+    private String data;
+    private int imagem;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    private long id;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public int getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(int imagem) {
+        this.imagem = imagem;
+    }
+
+
+
+
+
+
+    //CardView cv;
+    //ImageView img;
+    //RelativeLayout rl;
+    //TextView tvTitulo;
+    //TextView tvConteudo;
+    //TextView tvData;
+
+
+
+
+
+
+    /*
     public View createCard (Context myContext,String titulo,String conteudo, String data,int imagem){
         Random rand = new Random();
 
@@ -93,7 +152,7 @@ public class Aviso {
         cv.addView(rl);
 
         return cv;
-    }
+    }*/
 
 
 
