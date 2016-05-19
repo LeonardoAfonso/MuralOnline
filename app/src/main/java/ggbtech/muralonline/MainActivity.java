@@ -9,19 +9,34 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.content.Context;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements TarefaInterface{
-
-
+    private String url;
+    private Map<String, String> params;
+    private RequestQueue rq;
     private Context myContext;
     NestedScrollView mNestedScrollView;
     LinearLayout mLinearLayout;
@@ -61,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements TarefaInterface{
         mNestedScrollView.addView(mLinearLayout);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +88,54 @@ public class MainActivity extends AppCompatActivity implements TarefaInterface{
             }
         });
 
+        url = "http://localhost:8888/PhpProject1/index.php";
+        rq = Volley.newRequestQueue(MainActivity.this);
+
+        Button btn = new Button(myContext);
+        btn.setText("OK");
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callByJSONObjectRequest(v);
+            }
+        });
+
+        mLinearLayout.addView(btn);
+
+
+
+
+
     }
+
+
+    public void callByJSONObjectRequest(View view){
+        params = new HashMap<>();
+        params.put("email","teste");
+        params.put("senha","teste");
+        CustomJSONObjectResquest cjor = new CustomJSONObjectResquest(Request.Method.POST, url, params, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("Script", "SUCESS: " + response);
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this,"ERRO: "+error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        cjor.setTag("tag");
+        rq.add(cjor);
+
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        rq.cancelAll("tag");
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
