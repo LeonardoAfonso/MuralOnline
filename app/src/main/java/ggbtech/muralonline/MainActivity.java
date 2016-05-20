@@ -23,8 +23,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import org.json.JSONObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity{
     NestedScrollView mNestedScrollView;
     LinearLayout mLinearLayout;
     Button btn;
+    Aviso aviso = new Aviso();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity{
         mLinearLayout.setPadding(10,10,10,10);
         mLinearLayout.setClipToPadding(false);
 
-        final BD bd = new BD(this);
+        BD bd = new BD(this);
         List<Aviso> list = bd.buscar();
         final AvisoAdapter avisoAdapter = new AvisoAdapter(this,list);
 
@@ -77,9 +79,12 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //finish();
+                //startActivity( getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
 
-                onRestart();
-
+                //onStop();
+                //onRestart();
+                recreate();
                 Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -115,7 +120,25 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("Script", "SUCCESS: "+response);
-                        Toast.makeText(MainActivity.this, "SUCCESS :"+response, Toast.LENGTH_LONG).show();
+                        try {
+                            int id = (int) response.get("id");
+                            int cod = (int) response.get("cod");
+                            String titulo = (String) response.get("titulo");
+                            String conteudo = (String) response.get("conteudo");
+                            String data = (String) response.get("data");
+                            Toast.makeText(MainActivity.this, "SUCCESS : \n ID: "+id+"\n COD: "+
+                                    "\n Titulo: "+titulo+"\n Conteudo: "+conteudo+"\n Data: "+data, Toast.LENGTH_LONG).show();
+                            aviso.setId(id);
+                            aviso.setImagem(cod);
+                            aviso.setTitulo(titulo);
+                            aviso.setConteudo(conteudo);
+                            aviso.setData(data);
+                            BD bd2 = new BD(getApplicationContext());
+                            bd2.inserir(aviso);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //Toast.makeText(MainActivity.this, "SUCCESS :"+response, Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
