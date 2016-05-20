@@ -45,10 +45,15 @@ public class AddAvisoActivity extends AppCompatActivity {
                 BD bd = new BD(getApplicationContext());
                 bd.inserir(aviso);
 
-                Snackbar.make(view, "Usuario inserido com sucesso!", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Aviso inserido com sucesso!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(this,MainActivity.class));
     }
 
 }

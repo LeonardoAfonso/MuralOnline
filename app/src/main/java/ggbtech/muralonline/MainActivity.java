@@ -18,14 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.content.Context;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -33,18 +30,15 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements TarefaInterface{
+public class MainActivity extends AppCompatActivity{
     private String url;
+    private int adapterCount;
     private Map<String, String> params;
     private RequestQueue rq;
     private Context myContext;
     NestedScrollView mNestedScrollView;
     LinearLayout mLinearLayout;
-
-    public void consultarServer(){
-        Tarefa tarefa = new Tarefa(this,this);
-        tarefa.execute("http://192.168.100.13:8888/android_teste/");
-    }
+    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements TarefaInterface{
 
         mNestedScrollView = (NestedScrollView)findViewById(R.id.nestedLayout);
         mLinearLayout = new LinearLayout(myContext);
+        btn = new Button(myContext);
         mLinearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         mLinearLayout.setOrientation(LinearLayout.VERTICAL);
         mLinearLayout.setPadding(10,10,10,10);
@@ -64,69 +59,77 @@ public class MainActivity extends AppCompatActivity implements TarefaInterface{
 
         BD bd = new BD(this);
         List<Aviso> list = bd.buscar();
-        AvisoAdapter avisoAdapter = new AvisoAdapter(this,list);
+        final AvisoAdapter avisoAdapter = new AvisoAdapter(this,list);
 
-        final int adapterCount = avisoAdapter.getCount();
+        adapterCount = avisoAdapter.getCount();
 
         for (int i = adapterCount-1; i >=0 ; i--) {
             View item = avisoAdapter.getView(i, null, null);
             mLinearLayout.addView(item);
         }
 
+        mLinearLayout.addView(btn);
         mNestedScrollView.addView(mLinearLayout);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                startActivity(getIntent());
+                mLinearLayout.removeAllViews();
+
+                for (int i = adapterCount-1; i >=0 ; i--) {
+                    View item = avisoAdapter.getView(i, null, null);
+                    mLinearLayout.addView(item);
+                }
 
                 Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-        url = "http://localhost:8888/PhpProject1/index.php";
+        url = "http://www.aedi.ufpa.br/~leonardo/teste.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
-        Button btn = new Button(myContext);
+
         btn.setText("OK");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callByJSONObjectRequest(v);
+                callByJSONObjectRequest(null);
             }
         });
-
-        mLinearLayout.addView(btn);
-
-
-
-
 
     }
 
 
     public void callByJSONObjectRequest(View view){
+        Log.i("Script", "ENTREI: callByJsonObjectRequest()");
+
         params = new HashMap<>();
         params.put("email","teste");
-        params.put("senha","teste");
-        CustomJSONObjectResquest cjor = new CustomJSONObjectResquest(Request.Method.POST, url, params, new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("Script", "SUCESS: " + response);
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this,"ERRO: "+error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        params.put("password","teste");
+        params.put("method", "web-data-jor");
 
-        cjor.setTag("tag");
-        rq.add(cjor);
+        CustomJSONObjectResquest request = new CustomJSONObjectResquest(Request.Method.POST,
+                url,
+                params,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("Script", "SUCCESS: "+response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        request.setTag("tag");
+        rq.add(request);
 
     }
 
@@ -164,8 +167,4 @@ public class MainActivity extends AppCompatActivity implements TarefaInterface{
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void mudaTexto(String string) {
-
-    }
 }

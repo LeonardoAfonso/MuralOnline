@@ -42,7 +42,7 @@ public class BD {
 
 
     public void deletar(Aviso aviso){
-        bd.delete("aviso", "_id = "+aviso.getId(), null);
+        bd.delete("aviso", "_id ="+aviso.getId(), null);
     }
 
 
