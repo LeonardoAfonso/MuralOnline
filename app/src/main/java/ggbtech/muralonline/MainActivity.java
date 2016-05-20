@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
         mLinearLayout.setPadding(10,10,10,10);
         mLinearLayout.setClipToPadding(false);
 
-        BD bd = new BD(this);
+        final BD bd = new BD(this);
         List<Aviso> list = bd.buscar();
         final AvisoAdapter avisoAdapter = new AvisoAdapter(this,list);
 
@@ -77,12 +77,8 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLinearLayout.removeAllViews();
 
-                for (int i = adapterCount-1; i >=0 ; i--) {
-                    View item = avisoAdapter.getView(i, null, null);
-                    mLinearLayout.addView(item);
-                }
+                onRestart();
 
                 Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -119,6 +115,7 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("Script", "SUCCESS: "+response);
+                        Toast.makeText(MainActivity.this, "SUCCESS :"+response, Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
