@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/delete"
                 android:onClick=""
-                android:src="@android:drawable/ic_delete"
+                android:src="@android:drawable/ic_menu_delete"
                 android:layout_alignBottom="@+id/foto"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
