@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callByJSONObjectRequest(null);
+                callByJsonArrayRequest(null);
             }
         });
 
@@ -152,6 +153,51 @@ public class MainActivity extends AppCompatActivity{
         rq.add(request);
 
     }
+
+    public void callByJsonArrayRequest(View view){
+        params = new HashMap<String, String>();
+        params.put("email", "teste");
+        params.put("pasword", "teste");
+        params.put("method", "web-data-jar");
+
+        CustomJSONArrayRequest request = new CustomJSONArrayRequest(Request.Method.POST,
+                url,
+                params,
+                new Response.Listener<JSONArray>(){
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("Script", "SUCCESS: "+response);
+                        JSONObject json;
+                        BD bd2 = new BD(getApplicationContext());
+                        for (int i=0;i<response.length();i++){
+                            try {
+                                json = response.getJSONObject(i);
+                                Log.i("ID :", String.valueOf(json.getInt("id")));
+                                aviso.setId(json.getInt("id"));
+                                aviso.setImagem(json.getInt("cod"));
+                                aviso.setTitulo(json.getString("titulo"));
+                                aviso.setConteudo(json.getString("conteudo"));
+                                aviso.setData(json.getString("data"));
+                                bd2.inserir(aviso);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        request.setTag("tag");
+        rq.add(request);
+    }
+
+
 
     @Override
     public void onStop(){
