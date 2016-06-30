@@ -11,6 +11,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -186,14 +187,14 @@ public class MainActivity extends AppCompatActivity{
                         for (int i=0;i<response.length();i++){
                             try {
                                 json = response.getJSONObject(i);
-                                Log.i("ID :", String.valueOf(json.getInt("id")));
+                                Log.i("ID :", String.valueOf(json.getInt("aviso_id")));
                                 aviso.setId(json.getInt("id"));
-                                aviso.setImagem(json.getInt("cod"));
+                                aviso.setImagem(json.getInt("grupo_id"));
                                 aviso.setTitulo(json.getString("titulo"));
                                 aviso.setConteudo(json.getString("conteudo"));
                                 aviso.setData(json.getString("data"));
                                 bd2.inserir(aviso);
-                                editor.putInt("last_id",json.getInt("id"));
+                                editor.putInt("last_id",json.getInt("aviso_id"));
                                 editor.commit();
                                 Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
 
@@ -252,4 +253,13 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
