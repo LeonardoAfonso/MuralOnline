@@ -3,6 +3,7 @@ package ggbtech.muralonline;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity{
     LinearLayout mLinearLayout;
     Button btn;
     Aviso aviso = new Aviso();
+    SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,13 @@ public class MainActivity extends AppCompatActivity{
 
         mLinearLayout.addView(btn);
         mNestedScrollView.addView(mLinearLayout);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (sharedpreferences.contains("last_id")){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("last_id","1");
+            editor.commit();
+            Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
+        }
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -85,21 +95,24 @@ public class MainActivity extends AppCompatActivity{
 
                 //onStop();
                 //onRestart();
-                recreate();
+                callByJsonArrayRequest(null);
                 Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-        url = "http://www.aedi.ufpa.br/~leonardo/teste.php";
+        url = "http://localhost:8888/ProjetoAvisos/public/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
+
+
 
 
         btn.setText("OK");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callByJsonArrayRequest(null);
+                //callByJsonArrayRequest(null);
+                recreate();
             }
         });
 
@@ -110,9 +123,9 @@ public class MainActivity extends AppCompatActivity{
         Log.i("Script", "ENTREI: callByJsonObjectRequest()");
 
         params = new HashMap<>();
-        params.put("email","teste");
-        params.put("password","teste");
-        params.put("method", "web-data-jor");
+        params.put("last_id","teste");
+        //params.put("password","teste");
+        //params.put("method", "web-data-jor");
 
         CustomJSONObjectResquest request = new CustomJSONObjectResquest(Request.Method.POST,
                 url,
@@ -156,9 +169,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void callByJsonArrayRequest(View view){
         params = new HashMap<String, String>();
-        params.put("email", "teste");
-        params.put("pasword", "teste");
-        params.put("method", "web-data-jar");
+        params.put("last_id", sharedpreferences.getString("last_id",null));
+        //params.put("pasword", "teste");
+        //params.put("method", "web-data-jar");
 
         CustomJSONArrayRequest request = new CustomJSONArrayRequest(Request.Method.POST,
                 url,
@@ -166,6 +179,7 @@ public class MainActivity extends AppCompatActivity{
                 new Response.Listener<JSONArray>(){
                     @Override
                     public void onResponse(JSONArray response) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
                         Log.i("Script", "SUCCESS: "+response);
                         JSONObject json;
                         BD bd2 = new BD(getApplicationContext());
@@ -179,10 +193,15 @@ public class MainActivity extends AppCompatActivity{
                                 aviso.setConteudo(json.getString("conteudo"));
                                 aviso.setData(json.getString("data"));
                                 bd2.inserir(aviso);
+                                editor.putInt("last_id",json.getInt("id"));
+                                editor.commit();
+                                Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
+
                         }
                     }
                 },
