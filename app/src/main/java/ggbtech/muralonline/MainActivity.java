@@ -96,13 +96,15 @@ public class MainActivity extends AppCompatActivity{
 
                 //onStop();
                 //onRestart();
-                callByJsonArrayRequest(null);
+                recreate();
+                //callByJsonArrayRequest(view);
                 Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-        url = "http://localhost:8888/ProjetoAvisos/public/consultaAvisos.php";
+        url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAviso.php";
+        //url = "http://localhost:8888/ProjetoAvisos/public/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
 
@@ -112,8 +114,8 @@ public class MainActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //callByJsonArrayRequest(null);
-                recreate();
+                callByJsonArrayRequest(null);
+                //recreate();
             }
         });
 
