@@ -78,13 +78,6 @@ public class MainActivity extends AppCompatActivity{
         mLinearLayout.addView(btn);
         mNestedScrollView.addView(mLinearLayout);
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        if (sharedpreferences.contains("last_id")){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("last_id","1");
-            editor.commit();
-            Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
-        }
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -103,7 +96,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAviso.php";
+        url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
         //url = "http://localhost:8888/ProjetoAvisos/public/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
@@ -170,9 +163,28 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    public Boolean exists (){
+        if (sharedpreferences.contains("last_id")){
+            return false;
+        }else return true;
+    }
+
     public void callByJsonArrayRequest(View view){
+
+        if (exists()){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("last_id","0");
+            editor.commit();
+            Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
+        }else{
+            Log.i("Shared Preferences","Ja existe");
+            Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));}
+
         params = new HashMap<String, String>();
         params.put("last_id", sharedpreferences.getString("last_id",null));
+        Log.i("Script", "last_id: "+sharedpreferences.getString("last_id",null));
+
+
         //params.put("pasword", "teste");
         //params.put("method", "web-data-jar");
 
@@ -190,18 +202,19 @@ public class MainActivity extends AppCompatActivity{
                             try {
                                 json = response.getJSONObject(i);
                                 Log.i("ID :", String.valueOf(json.getInt("aviso_id")));
-                                aviso.setId(json.getInt("id"));
+                                aviso.setId(json.getInt("aviso_id"));
                                 aviso.setImagem(json.getInt("grupo_id"));
                                 aviso.setTitulo(json.getString("titulo"));
                                 aviso.setConteudo(json.getString("conteudo"));
                                 aviso.setData(json.getString("data"));
                                 bd2.inserir(aviso);
-                                editor.putInt("last_id",json.getInt("aviso_id"));
+                                editor.putString("last_id",String.valueOf(json.getInt("aviso_id")));
                                 editor.commit();
                                 Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+
                             }
 
 

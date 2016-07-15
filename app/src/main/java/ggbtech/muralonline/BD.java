@@ -58,7 +58,7 @@ public class BD {
             do{
 
                 Aviso a = new Aviso();
-                a.setId(cursor.getLong(0));
+                a.setId(cursor.getInt(0));
                 a.setImagem(cursor.getInt(1));
                 a.setTitulo(cursor.getString(2));
                 a.setConteudo(cursor.getString(3));

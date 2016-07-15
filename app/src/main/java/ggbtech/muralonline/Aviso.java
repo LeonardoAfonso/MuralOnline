@@ -17,7 +17,7 @@ import java.util.Random;
  * Created by Leonardo Afonso on 4/25/2016.
  */
 public class Aviso {
-    private long id;
+    private int id;
     private String titulo;
     private String conteudo;
     private String data;
@@ -27,7 +27,7 @@ public class Aviso {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
