@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
             mLinearLayout.addView(item);
         }
 
-        mLinearLayout.addView(btn);
+        //mLinearLayout.addView(btn);
         mNestedScrollView.addView(mLinearLayout);
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity{
 
                 //onStop();
                 //onRestart();
-                recreate();
-                //callByJsonArrayRequest(view);
-                Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                callByJsonArrayRequest(null);
+                //recreate();
+                //Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
             }
         });
 
@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity{
         Log.i("Script", "ENTREI: callByJsonObjectRequest()");
 
         params = new HashMap<>();
-        params.put("last_id","teste");
+        params.put("last_id", sharedpreferences.getString("last_id",null));
+        //params.put("last_id","teste");
         //params.put("password","teste");
         //params.put("method", "web-data-jor");
 
@@ -131,20 +132,10 @@ public class MainActivity extends AppCompatActivity{
                     public void onResponse(JSONObject response) {
                         Log.i("Script", "SUCCESS: "+response);
                         try {
-                            int id = (int) response.get("id");
-                            int cod = (int) response.get("cod");
-                            String titulo = (String) response.get("titulo");
-                            String conteudo = (String) response.get("conteudo");
-                            String data = (String) response.get("data");
-                            Toast.makeText(MainActivity.this, "SUCCESS : \n ID: "+id+"\n COD: "+
-                                    "\n Titulo: "+titulo+"\n Conteudo: "+conteudo+"\n Data: "+data, Toast.LENGTH_LONG).show();
-                            aviso.setId(id);
-                            aviso.setImagem(cod);
-                            aviso.setTitulo(titulo);
-                            aviso.setConteudo(conteudo);
-                            aviso.setData(data);
-                            BD bd2 = new BD(getApplicationContext());
-                            bd2.inserir(aviso);
+                            String sit = (String) response.get("sit");
+                            Log.i("Script", "Sit = "+sit);
+                            Snackbar.make(mNestedScrollView, "Atualizado", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -219,12 +210,24 @@ public class MainActivity extends AppCompatActivity{
 
 
                         }
+                        mLinearLayout.removeAllViews();
+                        List<Aviso> list = bd2.buscar();
+                        final AvisoAdapter avisoAdapter = new AvisoAdapter(MainActivity.this,list);
+
+                        adapterCount = avisoAdapter.getCount();
+
+                        for (int j = adapterCount-1; j >=0 ; j--) {
+                            View item = avisoAdapter.getView(j, null, null);
+                            mLinearLayout.addView(item);
+                        }
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_LONG).show();
+                        callByJSONObjectRequest(null);
                     }
                 });
 
