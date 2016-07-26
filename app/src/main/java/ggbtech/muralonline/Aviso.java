@@ -22,6 +22,11 @@ public class Aviso {
     private String conteudo;
     private String data;
     private int imagem;
+    //private String evento;
+    //private String hora;
+    //private String observacao;
+    //private String contato;
+
 
     public long getId() {
         return id;

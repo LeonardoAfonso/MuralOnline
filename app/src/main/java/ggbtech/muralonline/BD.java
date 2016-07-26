@@ -16,7 +16,7 @@ public class BD {
     private SQLiteDatabase bd;
 
     public BD(Context context){
-        BDCore auxBd = new BDCore(context);
+        BDCore auxBd = BDCore.getInstance(context);
         bd = auxBd.getWritableDatabase();
     }
 

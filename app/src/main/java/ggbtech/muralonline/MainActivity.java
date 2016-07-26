@@ -1,7 +1,4 @@
 package ggbtech.muralonline;
-
-
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,12 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.content.Context;
 import android.widget.Toast;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,8 +72,8 @@ public class MainActivity extends AppCompatActivity{
             mLinearLayout.addView(item);
         }
 
-        //mLinearLayout.addView(btn);
         mNestedScrollView.addView(mLinearLayout);
+
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -84,37 +81,19 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //finish();
-                //startActivity( getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-
-                //onStop();
-                //onRestart();
                 callByJsonArrayRequest(null);
-                //recreate();
-                //Snackbar.make(view, "Atualizado", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
-            }
+                }
         });
 
         url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
         //url = "http://localhost:8888/ProjetoAvisos/public/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
-
-
-
-        btn.setText("OK");
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callByJsonArrayRequest(null);
-                //recreate();
-            }
-        });
+        callByJsonArrayRequest(null);
 
     }
 
-
+    /*
     public void callByJSONObjectRequest(View view){
         Log.i("Script", "ENTREI: callByJsonObjectRequest()");
 
@@ -152,7 +131,7 @@ public class MainActivity extends AppCompatActivity{
         request.setTag("tag");
         rq.add(request);
 
-    }
+    }*/
 
     public Boolean exists (){
         if (sharedpreferences.contains("last_id")){
@@ -175,10 +154,6 @@ public class MainActivity extends AppCompatActivity{
         params.put("last_id", sharedpreferences.getString("last_id",null));
         Log.i("Script", "last_id: "+sharedpreferences.getString("last_id",null));
 
-
-        //params.put("pasword", "teste");
-        //params.put("method", "web-data-jar");
-
         CustomJSONArrayRequest request = new CustomJSONArrayRequest(Request.Method.POST,
                 url,
                 params,
@@ -189,27 +164,39 @@ public class MainActivity extends AppCompatActivity{
                         Log.i("Script", "SUCCESS: "+response);
                         JSONObject json;
                         BD bd2 = new BD(getApplicationContext());
-                        for (int i=0;i<response.length();i++){
-                            try {
-                                json = response.getJSONObject(i);
-                                Log.i("ID :", String.valueOf(json.getInt("aviso_id")));
-                                aviso.setId(json.getInt("aviso_id"));
-                                aviso.setImagem(json.getInt("grupo_id"));
-                                aviso.setTitulo(json.getString("titulo"));
-                                aviso.setConteudo(json.getString("conteudo"));
-                                aviso.setData(json.getString("data"));
-                                bd2.inserir(aviso);
-                                editor.putString("last_id",String.valueOf(json.getInt("aviso_id")));
-                                editor.commit();
-                                Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
+                        try {
+                                json = response.getJSONObject(0);
+                                if(json.has("sit")){
+                                    Log.i("Script", "SUCCESS: "+response);
+                                    try {
+                                        String sit = (String) json.getString("sit");
+                                        Log.i("Script", "Sit = "+sit);
+                                        Snackbar.make(mNestedScrollView, "Atualizado", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }else{
+                                    for (int i=0;i<response.length();i++){
+                                        Log.i("ID :", String.valueOf(json.getInt("aviso_id")));
+                                        aviso.setId(json.getInt("aviso_id"));
+                                        aviso.setImagem(json.getInt("grupo_id"));
+                                        aviso.setTitulo(json.getString("titulo"));
+                                        aviso.setConteudo(json.getString("conteudo"));
+                                        aviso.setData(json.getString("data"));
+                                        bd2.inserir(aviso);
+                                    }
+                                    editor.putString("last_id",String.valueOf(json.getInt("aviso_id")));
+                                    editor.commit();
+                                    Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
 
                             }
 
-
-                        }
                         mLinearLayout.removeAllViews();
                         List<Aviso> list = bd2.buscar();
                         final AvisoAdapter avisoAdapter = new AvisoAdapter(MainActivity.this,list);
@@ -226,16 +213,26 @@ public class MainActivity extends AppCompatActivity{
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_LONG).show();
-                        callByJSONObjectRequest(null);
+                        Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_LONG).show();
+                        /*
+                        NetworkResponse resp = error.networkResponse;
+                        if (resp != null && resp.data !=null){
+                            switch(resp.statusCode){
+                                case 400:Toast.makeText(MainActivity.this, "Bad Request : ERROR 400",Toast.LENGTH_LONG).show();break;
+                                case 404:Toast.makeText(MainActivity.this, "NOT FOUND : ERROR 404",Toast.LENGTH_LONG).show();break;
+                                case 401:Toast.makeText(MainActivity.this, "UNAUTHORIZED : ERROR 401",Toast.LENGTH_LONG).show();break;
+                                case 403:Toast.makeText(MainActivity.this, "FORBIDDEN : ERROR 403",Toast.LENGTH_LONG).show();break;
+                                case 408:Toast.makeText(MainActivity.this, "REQUEST TIMEDOUT : ERROR 408",Toast.LENGTH_LONG).show();break;
+
+                            }
+                        }*/
+
                     }
                 });
 
         request.setTag("tag");
         rq.add(request);
     }
-
-
 
     @Override
     public void onStop(){

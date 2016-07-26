@@ -9,12 +9,28 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BDCore extends SQLiteOpenHelper {
     private static final String NOME_BD = "teste";
-    private static final int VERSAO_BD = 7;
+    private static final int VERSAO_BD = 8;
 
+    private static BDCore mInstance = null;
 
-    public BDCore(Context ctx){
-        super(ctx, NOME_BD, null, VERSAO_BD);
+    public static BDCore getInstance (Context ctx){
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (mInstance == null) {
+            mInstance = new BDCore(ctx.getApplicationContext());
+        }
+        return mInstance;
     }
+
+    private BDCore(Context ctx){
+        super(ctx,NOME_BD,null,VERSAO_BD);
+    }
+
+    //public BDCore(Context ctx){
+     //   super(ctx, NOME_BD, null, VERSAO_BD);
+    //}
+
 
 
     @Override
