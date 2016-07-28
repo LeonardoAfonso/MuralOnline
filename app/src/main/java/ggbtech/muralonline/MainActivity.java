@@ -179,15 +179,19 @@ public class MainActivity extends AppCompatActivity{
 
                                 }else{
                                     for (int i=0;i<response.length();i++){
-                                        Log.i("ID :", String.valueOf(json.getInt("aviso_id")));
-                                        aviso.setId(json.getInt("aviso_id"));
+                                        json = response.getJSONObject(i);
+                                        Log.i("ID :", String.valueOf(json.getInt("avisos_id")));
+                                        aviso.setId(json.getInt("avisos_id"));
                                         aviso.setImagem(json.getInt("grupo_id"));
                                         aviso.setTitulo(json.getString("titulo"));
-                                        aviso.setConteudo(json.getString("conteudo"));
+                                        aviso.setEvento(json.getString("evento"));
                                         aviso.setData(json.getString("data"));
+                                        aviso.setHora(json.getString("hora"));
+                                        aviso.setObservacao(json.getString("observacao"));
+                                        aviso.setContato(json.getString("contato"));
                                         bd2.inserir(aviso);
                                     }
-                                    editor.putString("last_id",String.valueOf(json.getInt("aviso_id")));
+                                    editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
                                     editor.commit();
                                     Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
                                 }

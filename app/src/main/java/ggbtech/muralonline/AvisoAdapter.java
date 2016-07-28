@@ -50,7 +50,7 @@ public class AvisoAdapter extends BaseAdapter {
         final int auxPosition = position;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.cardview_aviso, null);
+        final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.cardview_aviso_novo, null);
 
         int foto = list.get(position).getImagem();
         ImageView imagem = (ImageView) layout.findViewById(R.id.foto);
@@ -66,10 +66,17 @@ public class AvisoAdapter extends BaseAdapter {
 
         TextView titulo = (TextView) layout.findViewById(R.id.titulo);
         titulo.setText(list.get(position).getTitulo());
-        TextView conteudo = (TextView) layout.findViewById(R.id.conteudo);
-        conteudo.setText(list.get(position).getConteudo());
+        TextView evento = (TextView) layout.findViewById(R.id.evento);
+        evento.setText(list.get(position).getEvento());
         TextView data = (TextView) layout.findViewById(R.id.data);
         data.setText(list.get(position).getData());
+        TextView hora = (TextView) layout.findViewById(R.id.hora);
+        hora.setText("às "+ list.get(position).getHora());
+        TextView observacao = (TextView) layout.findViewById(R.id.obs);
+        observacao.setText(list.get(position).getObservacao());
+        TextView contato = (TextView) layout.findViewById(R.id.contato);
+        contato.setText(list.get(position).getContato());
+
 
 
 

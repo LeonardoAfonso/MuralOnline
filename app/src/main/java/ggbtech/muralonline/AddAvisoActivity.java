@@ -41,7 +41,7 @@ public class AddAvisoActivity extends AppCompatActivity {
 
                 aviso.setImagem(Integer.parseInt(etImagem.getText().toString()));
                 aviso.setTitulo(etTitulo.getText().toString());
-                aviso.setConteudo(etConteudo.getText().toString());
+                //aviso.setConteudo(etConteudo.getText().toString());
                 aviso.setData(etData.getText().toString());
 
                 BD bd = new BD(getApplicationContext());

@@ -19,13 +19,46 @@ import java.util.Random;
 public class Aviso {
     private int id;
     private String titulo;
-    private String conteudo;
     private String data;
     private int imagem;
-    //private String evento;
-    //private String hora;
-    //private String observacao;
-    //private String contato;
+    private String evento;
+    private String hora;
+    private String observacao;
+    private String contato;
+
+    public String getEvento() {
+        return evento;
+    }
+
+    public void setEvento(String evento) {
+        this.evento = evento;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public String getContato() {
+        return contato;
+    }
+
+    public void setContato(String contato) {
+        this.contato = contato;
+    }
+
+
 
 
     public long getId() {
@@ -46,13 +79,6 @@ public class Aviso {
         this.titulo = titulo;
     }
 
-    public String getConteudo() {
-        return conteudo;
-    }
-
-    public void setConteudo(String conteudo) {
-        this.conteudo = conteudo;
-    }
 
     public String getData() {
         return data;
@@ -69,10 +95,6 @@ public class Aviso {
     public void setImagem(int imagem) {
         this.imagem = imagem;
     }
-
-
-
-
 
 
     //CardView cv;

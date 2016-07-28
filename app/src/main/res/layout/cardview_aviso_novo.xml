@@ -88,7 +88,7 @@
                 android:id="@+id/delete"
                 android:onClick=""
                 android:src="@android:drawable/ic_menu_delete"
-                android:layout_alignBottom="@+id/contato"
+                android:layout_alignBottom="@+id/obs"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -97,9 +97,9 @@
                 android:layout_height="wrap_content"
                 android:text="OBSERVACAO"
                 android:id="@+id/obs"
-                android:layout_below="@+id/data"
+                android:layout_below="@+id/contato"
+                android:layout_toRightOf="@+id/foto"
                 android:textSize="15sp"
-                android:layout_marginTop="5dp"
 
                 />
 
@@ -108,9 +108,9 @@
                 android:layout_height="wrap_content"
                 android:text="(91) 9888-8888"
                 android:id="@+id/contato"
-                android:layout_below="@+id/obs"
+                android:layout_below="@+id/data"
+                android:layout_toRightOf="@+id/foto"
                 android:textSize="15sp"
-                android:layout_marginTop="5dp"
 
                 />
 
