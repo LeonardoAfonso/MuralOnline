@@ -139,6 +139,13 @@ public class MainActivity extends AppCompatActivity{
         }else return true;
     }
 
+    public String novosAvisos(int length){
+        if (length == 1)
+            return "Você tem "+ length +" novo aviso";
+        else
+            return "Você tem "+length+" novos avisos";
+    }
+
     public void callByJsonArrayRequest(View view){
 
         if (exists()){
@@ -194,6 +201,8 @@ public class MainActivity extends AppCompatActivity{
                                     editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
                                     editor.commit();
                                     Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
+                                    Snackbar.make(mNestedScrollView, novosAvisos(response.length()), Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
                                 }
 
                             } catch (JSONException e) {
@@ -211,6 +220,8 @@ public class MainActivity extends AppCompatActivity{
                             View item = avisoAdapter.getView(j, null, null);
                             mLinearLayout.addView(item);
                         }
+
+
 
                     }
                 },
