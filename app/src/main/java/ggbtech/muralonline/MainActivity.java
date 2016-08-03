@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity{
                                         aviso.setImagem(json.getInt("grupo_id"));
                                         aviso.setTitulo(json.getString("titulo"));
                                         aviso.setEvento(json.getString("evento"));
+                                        aviso.setLocal(json.getString("local"));
                                         aviso.setData(json.getString("data"));
                                         aviso.setHora(json.getString("hora"));
                                         aviso.setObservacao(json.getString("observacao"));

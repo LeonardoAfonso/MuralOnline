@@ -68,6 +68,8 @@ public class AvisoAdapter extends BaseAdapter {
         titulo.setText(list.get(position).getTitulo());
         TextView evento = (TextView) layout.findViewById(R.id.evento);
         evento.setText(list.get(position).getEvento());
+        TextView local = (TextView)  layout.findViewById(R.id.local);
+        local.setText(list.get(position).getLocal());
         TextView data = (TextView) layout.findViewById(R.id.data);
         data.setText(list.get(position).getData());
         TextView hora = (TextView) layout.findViewById(R.id.hora);

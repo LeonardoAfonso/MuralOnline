@@ -26,6 +26,7 @@ public class BD {
         valores.put("imagem",aviso.getImagem());
         valores.put("titulo", aviso.getTitulo());
         valores.put("evento", aviso.getEvento());
+        valores.put("local", aviso.getLocal());
         valores.put("data", aviso.getData());
         valores.put("hora", aviso.getHora());
         valores.put("observacao", aviso.getObservacao());
@@ -51,7 +52,7 @@ public class BD {
 
     public List<Aviso> buscar(){
         List<Aviso> list = new ArrayList<Aviso>();
-        String[] colunas = new String[]{"_id", "imagem", "titulo", "evento", "data", "hora", "observacao", "contato"};
+        String[] colunas = new String[]{"_id", "imagem", "titulo", "evento", "local", "data", "hora", "observacao", "contato"};
 
         Cursor cursor = bd.query("aviso", colunas, null, null, null, null, "_id ASC");
 
@@ -65,10 +66,11 @@ public class BD {
                 a.setImagem(cursor.getInt(1));
                 a.setTitulo(cursor.getString(2));
                 a.setEvento(cursor.getString(3));
-                a.setData(cursor.getString(4));
-                a.setHora(cursor.getString(5));
-                a.setObservacao(cursor.getString(6));
-                a.setContato(cursor.getString(7));
+                a.setLocal(cursor.getString(4));
+                a.setData(cursor.getString(5));
+                a.setHora(cursor.getString(6));
+                a.setObservacao(cursor.getString(7));
+                a.setContato(cursor.getString(8));
                 list.add(a);
 
             }while(cursor.moveToNext());

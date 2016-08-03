@@ -22,9 +22,18 @@ public class Aviso {
     private String data;
     private int imagem;
     private String evento;
+    private String local;
     private String hora;
     private String observacao;
     private String contato;
+
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
 
     public String getEvento() {
         return evento;
