@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AvisoAdapter extends BaseAdapter {
     private Context context;
@@ -112,6 +113,7 @@ public class AvisoAdapter extends BaseAdapter {
                                 BD bd = new BD(context);
                                 bd.deletar(list.get(auxPosition));
                                 layout.setVisibility(View.GONE);
+                                Toast.makeText(context, "Aviso excluido", Toast.LENGTH_LONG).show();
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:

@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity{
                 }
         });
 
-        url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
-        //url = "http://localhost:8888/ProjetoAvisos/public/consultaAvisos.php";
+        //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
+        url = "http://192.168.0.13/ProjetoAvisos/ProjetoAvisos/public/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
         callByJsonArrayRequest(null);
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
-            Intent intent = new Intent(this, AddAvisoActivity.class);
+            Intent intent = new Intent(this, AvisoFixosActivity.class);
             startActivity(intent);
             return true;
         }else if (id == R.id.action_list) {

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_add"
         android:orderInCategory="100"
-        android:title="Adicionar Aviso"
+        android:title="Horarios Semanais"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_list"
