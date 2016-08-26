@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,6 +58,7 @@ public class AvisoFixosActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,13 +85,19 @@ public class AvisoFixosActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch(id){
+            case R.id.action_settings: return true;
+            case android.R.id.home: NavUtils.navigateUpFromSameTask(this);return true;
+        }
+
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
         }else if (id == R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
+            Log.i("Script", "apertei o botao");
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
