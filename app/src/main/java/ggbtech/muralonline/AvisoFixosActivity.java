@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class AvisoFixosActivity extends AppCompatActivity {
 
     /**
@@ -53,6 +55,27 @@ public class AvisoFixosActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (day) {
+            case Calendar.SUNDAY:
+                // Current day is Sunday
+                mViewPager.setCurrentItem(1,true);break;
+            case Calendar.MONDAY:
+                mViewPager.setCurrentItem(2,true);break;
+            // Current day is Monday
+            case Calendar.TUESDAY:
+                mViewPager.setCurrentItem(3,true);break;
+            case Calendar.WEDNESDAY:
+                mViewPager.setCurrentItem(4,true);break;
+            case Calendar.THURSDAY:
+                mViewPager.setCurrentItem(5,true);break;
+            case Calendar.FRIDAY:
+                mViewPager.setCurrentItem(6,true);break;
+            case Calendar.SATURDAY:
+                mViewPager.setCurrentItem(7,true);break;
+            // etc.
+        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -149,6 +172,7 @@ public class AvisoFixosActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
