@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="Listar"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Configurações"
+        app:showAsAction="never" />
 </menu>
