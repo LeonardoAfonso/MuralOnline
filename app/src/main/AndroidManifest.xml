@@ -29,10 +29,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".AddAvisoActivity"
-            android:label="@string/title_activity_add_aviso"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".AvisoFixosActivity"
             android:label="@string/title_activity_aviso_fixos"
             android:theme="@style/AppTheme.NoActionBar">

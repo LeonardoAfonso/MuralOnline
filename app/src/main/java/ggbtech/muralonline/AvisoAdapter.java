@@ -9,6 +9,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AvisoAdapter extends BaseAdapter {
+public class AvisoAdapter extends BaseAdapter implements View.OnClickListener {
     private Context context;
     private List<Aviso> list;
 
@@ -47,11 +50,19 @@ public class AvisoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View arg1, ViewGroup arg2) {
+    public CardView getView(int position, View arg1, ViewGroup arg2) {
         final int auxPosition = position;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.cardview_aviso_novo, null);
+        //final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.cardview_aviso_novo, null);
+
+        final CardView layout = (CardView)inflater.inflate(R.layout.aviso_cv,null);
+
+
+
+        //layout.setCardBackgroundColor(Color.RED);
+
+        layout.setOnClickListener(this);
 
         int foto = list.get(position).getImagem();
         ImageView imagem = (ImageView) layout.findViewById(R.id.foto);
@@ -101,6 +112,7 @@ public class AvisoAdapter extends BaseAdapter {
         });*/
 
         ImageView deletarBt = (ImageView) layout.findViewById(R.id.delete);
+        deletarBt.setColorFilter(Color.GRAY);
         deletarBt.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View arg0) {
@@ -131,6 +143,17 @@ public class AvisoAdapter extends BaseAdapter {
         });
 
         return layout;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if(v.getElevation() == 30){
+                v.setElevation(10);
+            }else {
+                v.setElevation(30);
+            }
+        }
     }
 
 }

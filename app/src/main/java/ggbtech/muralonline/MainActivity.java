@@ -1,14 +1,17 @@
 package ggbtech.muralonline;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,14 +62,13 @@ public class MainActivity extends AppCompatActivity{
         mLinearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         mLinearLayout.setOrientation(LinearLayout.VERTICAL);
         mLinearLayout.setPadding(10,10,10,10);
-        mLinearLayout.setClipToPadding(false);
+        //mLinearLayout.setClipToPadding(false);
 
         BD bd = new BD(this);
         List<Aviso> list = bd.buscar();
         final AvisoAdapter avisoAdapter = new AvisoAdapter(this,list);
 
         adapterCount = avisoAdapter.getCount();
-
         for (int i = adapterCount-1; i >=0 ; i--) {
             View item = avisoAdapter.getView(i, null, null);
             mLinearLayout.addView(item);
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
         //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
-        url = "http://192.168.0.13/ProjetoAvisos/ProjetoAvisos/public/consultaAvisos.php";
+        url = "http://192.168.1.105:8888/ProjetoAvisos/public/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
         callByJsonArrayRequest(null);
