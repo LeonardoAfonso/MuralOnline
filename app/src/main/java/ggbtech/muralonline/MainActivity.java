@@ -1,4 +1,6 @@
 package ggbtech.muralonline;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -36,6 +38,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +66,23 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         myContext = getApplicationContext();
+
+        /*
+        boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
+
+        if(alarmeAtivo){
+            Log.i("Script", "Novo alarme");
+            Intent intent = new Intent("ALARME_DISPARADO");
+            PendingIntent p = PendingIntent.getBroadcast(this, 0, intent, 0);
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(System.currentTimeMillis());
+            c.add(Calendar.SECOND, 3);
+            AlarmManager alarme = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 15000, p);
+        }
+        else{
+            Log.i("Script", "Alarme ja ativo");
+        }*/
 
         mNestedScrollView = (NestedScrollView)findViewById(R.id.nestedLayout);
         mLinearLayout = new LinearLayout(myContext);

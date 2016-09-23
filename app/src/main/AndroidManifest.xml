@@ -3,7 +3,9 @@
     package="ggbtech.muralonline">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /-->
 
     <application
         android:allowBackup="true"
@@ -40,12 +42,27 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ggbtech.muralonline.MainActivity" />
-
         </activity>
+
+        <receiver
+            android:name=".AvisoReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"></category>
+
+                <action android:name="ALARME_DISPARADO"></action>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".AtualizarAvisosService"
+            android:enabled="true"
+            android:exported="true"></service>
+
     </application>
 
 </manifest>
