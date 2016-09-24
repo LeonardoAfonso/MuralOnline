@@ -32,22 +32,25 @@ public class AtualizarAvisosService extends IntentService {
     private String url;
     private RequestQueue rq;
     private HashMap params;
-    private SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs" ;
+    private SharedPreferences sharedpreferences;
+
 
     public AtualizarAvisosService() {
         super("AtualizarAvisosService");
     }
 
-    public Boolean exists (){
-        if (sharedpreferences.contains("last_id")){
+    public Boolean exists (SharedPreferences sp){
+        if (sp.contains("last_id")){
             return false;
         }else return true;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (exists()){
+        sharedpreferences  = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        if (exists(sharedpreferences)){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("last_id","0");
             editor.commit();
@@ -59,8 +62,8 @@ public class AtualizarAvisosService extends IntentService {
         params = new HashMap<String, String>();
         params.put("last_id", sharedpreferences.getString("last_id",null));
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        url = "http://192.168.0.16/ProjetoAvisos/ProjetoAvisos/public/consultaAvisos.php";
+        url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
+        Log.i("Service", "Servico");
 
         rq = Volley.newRequestQueue(this);
         callJsonRequest();

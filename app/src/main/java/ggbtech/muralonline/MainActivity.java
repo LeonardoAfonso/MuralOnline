@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity{
 
         if(alarmeAtivo){
             Log.i("Script", "Novo alarme");
-            Intent intent = new Intent(this, AtualizarAvisosService.class);
+            Intent intent = new Intent("ALARME_DISPARADO");
             PendingIntent p = PendingIntent.getBroadcast(this, 0, intent, 0);
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(System.currentTimeMillis());
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
         //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
-        url = "http://192.168.0.16/ProjetoAvisos/ProjetoAvisos/public/consultaAvisos.php";
+        url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
 
