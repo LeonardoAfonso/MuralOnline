@@ -15,8 +15,8 @@ public class AvisoReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("BR","Alarme");
-        gerarNotificacao(context, new Intent(context, MainActivity.class), "Nova mensagem", "Titulo", "Descricao nova mensagem");
+        Log.i("BR","Service");
+        gerarNotificacao(context, new Intent(context, MainActivity.class), "Mural Online Novos Avisos", "Voce Possui Novos Avisos", "Clique para visualizar");
     }
 
     public void gerarNotificacao(Context context, Intent intent, CharSequence ticker, CharSequence titulo, CharSequence descricao) {
