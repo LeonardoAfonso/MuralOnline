@@ -62,7 +62,8 @@ public class AtualizarAvisosService extends IntentService {
         params = new HashMap<String, String>();
         params.put("last_id", sharedpreferences.getString("last_id",null));
 
-        url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
+        url="http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
+        //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
 
         rq = Volley.newRequestQueue(this);
@@ -82,7 +83,6 @@ public class AtualizarAvisosService extends IntentService {
                         try {
                             json = response.getJSONObject(0);
                             if(json.has("sit")){
-                                Log.i("Script", "SUCCESS: "+response);
                                 try {
                                     String sit = json.getString("sit");
                                     Log.i("Script", "Sit = "+sit);
@@ -91,6 +91,7 @@ public class AtualizarAvisosService extends IntentService {
                                 }
                             }else{
                                 Intent it = new Intent("NOVOS_AVISOS");
+                                it.putExtra("num_avisos",response.length());
                                 sendBroadcast(it);
                             }
                         } catch (JSONException e) {

@@ -67,22 +67,22 @@ public class MainActivity extends AppCompatActivity{
 
         myContext = getApplicationContext();
 
-
         boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
 
         if(alarmeAtivo){
             Log.i("Script", "Novo alarme");
-            Intent intent = new Intent("ALARME_DISPARADO");
-            PendingIntent p = PendingIntent.getBroadcast(this, 0, intent, 0);
+            Intent it = new Intent("ALARME_DISPARADO");
+            PendingIntent p = PendingIntent.getBroadcast(this, 0, it, 0);
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(System.currentTimeMillis());
             c.add(Calendar.SECOND, 3);
             AlarmManager alarme = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 30000, p);
+            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 300000, p);
         }
         else{
             Log.i("Script", "Alarme ja ativo");
         }
+
 
         mNestedScrollView = (NestedScrollView)findViewById(R.id.nestedLayout);
         mLinearLayout = new LinearLayout(myContext);
@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
-        url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
+        url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
+        //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         rq = Volley.newRequestQueue(MainActivity.this);
 
 
