@@ -10,8 +10,8 @@ import android.util.Log;
 import java.util.Calendar;
 
 public class bootService extends IntentService {
-    public bootService(String name) {
-        super(name);
+    public bootService() {
+        super("bootService");
     }
     @Override
     protected void onHandleIntent(Intent intent) {
