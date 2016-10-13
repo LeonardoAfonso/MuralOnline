@@ -1,21 +1,14 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.Services;
 
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
@@ -24,8 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
 
 public class AtualizarAvisosService extends IntentService {
@@ -62,7 +55,7 @@ public class AtualizarAvisosService extends IntentService {
         params = new HashMap<String, String>();
         params.put("last_id", sharedpreferences.getString("last_id",null));
 
-        url="http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
+        url= sharedpreferences.getString("url",null);
         //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
 

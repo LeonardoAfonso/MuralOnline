@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -35,8 +36,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ggbtech.muralonline.Classes.Aviso;
+import ggbtech.muralonline.Classes.AvisoAdapter;
+import ggbtech.muralonline.DB.BD;
+import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
-public class TabAvisosFragment extends Fragment {
+
+public class TabAvisosFragment extends Fragment{
     private String url;
     private int adapterCount;
     private Map<String, String> params;
@@ -62,6 +68,10 @@ public class TabAvisosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tabbed_main, container, false);
+
+        //View mainView = inflater.inflate(R.layout.activity_tabbed_main,container,false);
+
+        //FloatingActionButton fab = (FloatingActionButton)mainView.findViewById(R.id.fab);
 
         myContext = getContext();
 
@@ -103,7 +113,13 @@ public class TabAvisosFragment extends Fragment {
         sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
-        url = "http://192.168.100.23/ProjetoAvisos/consultaAvisos.php";
+        if(!(sharedpreferences.contains("url"))){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("url","http://192.168.43.160/ProjetoAvisos/consultaAvisos.php");
+            editor.commit();
+        }
+
+        url = sharedpreferences.getString("url",null)  ;//"http://192.168.100.23/ProjetoAvisos/consultaAvisos.php";
         rq = Volley.newRequestQueue(myContext);
 
         if(isConnected()){
@@ -130,7 +146,7 @@ public class TabAvisosFragment extends Fragment {
     }
 
     public Boolean isConnected(){
-        ConnectivityManager cm =(ConnectivityManager)myContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm =(ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         return connected;
@@ -233,5 +249,4 @@ public class TabAvisosFragment extends Fragment {
         super.onStop();
         rq.cancelAll("tag");
     }
-
 }

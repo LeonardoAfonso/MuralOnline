@@ -1,8 +1,10 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.Receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import ggbtech.muralonline.Services.bootService;
 
 public class bootReceiver extends BroadcastReceiver {
     public bootReceiver() {

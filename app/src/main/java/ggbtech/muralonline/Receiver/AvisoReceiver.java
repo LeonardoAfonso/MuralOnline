@@ -1,4 +1,4 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.Receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import ggbtech.muralonline.R;
+import ggbtech.muralonline.TabbedMainActivity;
 
 public class AvisoReceiver extends BroadcastReceiver {
     public AvisoReceiver() {
@@ -17,7 +19,7 @@ public class AvisoReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.i("BR","Resposta Service");
         int num = intent.getExtras().getInt("num_avisos");
-        gerarNotificacao(context, new Intent(context, MainActivity.class), "Chegaram Novos Avisos", "Voce Possui "+num+" Novos Avisos", "Clique para visualizar");
+        gerarNotificacao(context, new Intent(context, TabbedMainActivity.class), "Chegaram Novos Avisos", "Voce Possui "+num+" Novos Avisos", "Clique para visualizar");
     }
 
     public void gerarNotificacao(Context context, Intent intent, CharSequence ticker, CharSequence titulo, CharSequence descricao) {

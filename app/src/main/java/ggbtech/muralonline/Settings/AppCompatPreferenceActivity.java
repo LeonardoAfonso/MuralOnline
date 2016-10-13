@@ -1,4 +1,4 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.Settings;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

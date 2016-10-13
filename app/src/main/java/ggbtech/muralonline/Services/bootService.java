@@ -1,4 +1,4 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.Services;
 
 import android.app.AlarmManager;
 import android.app.IntentService;

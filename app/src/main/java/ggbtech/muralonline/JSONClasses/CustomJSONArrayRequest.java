@@ -1,34 +1,37 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.JSONClasses;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.HttpHeaderParser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+/**
+ * Created by AEDI on 30/05/16.
+ */
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by AEDI on 19/05/16.
- */
-class CustomJSONObjectResquest extends Request<JSONObject> {
-    private Response.Listener<JSONObject> response;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.HttpHeaderParser;
+
+public class CustomJSONArrayRequest extends Request<JSONArray> {
+    private Listener<JSONArray> response;
     private Map<String, String> params;
 
 
-    public CustomJSONObjectResquest(int method, String url, Map<String, String> params, Response.Listener<JSONObject> response, Response.ErrorListener listener) {
+    public CustomJSONArrayRequest(int method, String url, Map<String, String> params, Listener<JSONArray> response, ErrorListener listener) {
         super(method, url, listener);
         this.params = params;
         this.response = response;
         // TODO Auto-generated constructor stub
     }
-    public CustomJSONObjectResquest (String url, Map<String, String> params, Response.Listener<JSONObject> response, Response.ErrorListener listener) {
+    public CustomJSONArrayRequest(String url, Map<String, String> params, Listener<JSONArray> response, ErrorListener listener) {
         super(Method.GET, url, listener);
         this.params = params;
         this.response = response;
@@ -41,7 +44,7 @@ class CustomJSONObjectResquest extends Request<JSONObject> {
 
     public Map<String, String> getHeaders() throws AuthFailureError{
         HashMap<String, String> header = new HashMap<String, String>();
-        header.put("apiKey", "Essa e minha API KEY: json object");
+        header.put("apiKey", "Essa e minha API KEY: json array");
 
         return(header);
     }
@@ -50,12 +53,11 @@ class CustomJSONObjectResquest extends Request<JSONObject> {
         return(Priority.NORMAL);
     }
 
-
     @Override
-    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+    protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
         try {
             String js = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return(Response.success(new JSONObject(js), HttpHeaderParser.parseCacheHeaders(response)));
+            return(Response.success(new JSONArray(js), HttpHeaderParser.parseCacheHeaders(response)));
         }
         catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -68,7 +70,7 @@ class CustomJSONObjectResquest extends Request<JSONObject> {
 
 
     @Override
-    protected void deliverResponse(JSONObject response) {
+    protected void deliverResponse(JSONArray response) {
         this.response.onResponse(response);
     }
 

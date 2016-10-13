@@ -1,4 +1,4 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.DB;
 
 /**
  * Created by AEDI on 17/05/16.
@@ -11,6 +11,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import ggbtech.muralonline.Classes.Aviso;
 
 public class BD {
     private SQLiteDatabase bd;

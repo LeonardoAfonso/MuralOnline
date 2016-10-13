@@ -1,4 +1,4 @@
-package ggbtech.muralonline;
+package ggbtech.muralonline.DB;
 
 /**
  * Created by AEDI on 17/05/16.
