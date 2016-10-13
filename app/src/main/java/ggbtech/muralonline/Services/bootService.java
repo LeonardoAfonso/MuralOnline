@@ -24,7 +24,7 @@ public class bootService extends IntentService {
             c.setTimeInMillis(System.currentTimeMillis());
             c.add(Calendar.SECOND, 3);
             AlarmManager alarme = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 300000, p);
+            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 30000, p);
         }
         else{
             Log.i("Script", "Alarme ja ativo");

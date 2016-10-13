@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -28,6 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +41,7 @@ import java.util.Map;
 
 import ggbtech.muralonline.Classes.Aviso;
 import ggbtech.muralonline.Classes.AvisoAdapter;
+import ggbtech.muralonline.Classes.HelloWorldEvent;
 import ggbtech.muralonline.DB.BD;
 import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
@@ -115,7 +119,7 @@ public class TabAvisosFragment extends Fragment{
         //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
         if(!(sharedpreferences.contains("url"))){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("url","http://192.168.43.160/ProjetoAvisos/consultaAvisos.php");
+            editor.putString("url","http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php");
             editor.commit();
         }
 
@@ -152,6 +156,7 @@ public class TabAvisosFragment extends Fragment{
         return connected;
     }
 
+    //@Subscribe(threadMode = ThreadMode.MAIN)
     public void callByJsonArrayRequest(View view){
         if (exists()){
             SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -242,6 +247,28 @@ public class TabAvisosFragment extends Fragment{
 
         request.setTag("tag");
         rq.add(request);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(HelloWorldEvent event){
+        //Toast.makeText(getActivity(), event.getMessage(), Toast.LENGTH_SHORT).show();
+        if(isConnected()){
+            callByJsonArrayRequest(null);
+        }else{
+            Toast.makeText(myContext,"Sem conexão à Internet",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
