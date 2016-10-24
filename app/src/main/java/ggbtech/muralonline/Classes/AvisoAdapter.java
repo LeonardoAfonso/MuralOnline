@@ -118,7 +118,7 @@ public class AvisoAdapter extends BaseAdapter{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
+                            case DialogInterface.BUTTON_NEGATIVE://valor invertido POSITIVE
                                 //Yes button clicked
                                 BD bd = new BD(context);
                                 bd.deletar(list.get(auxPosition));
@@ -126,16 +126,17 @@ public class AvisoAdapter extends BaseAdapter{
                                 Toast.makeText(context, "Aviso excluido", Toast.LENGTH_LONG).show();
                                 break;
 
-                            case DialogInterface.BUTTON_NEGATIVE:
+                            case DialogInterface.BUTTON_POSITIVE://valor invertido NEGATIVE
                                 //No button clicked
                                 break;
                         }
                     }
                 };
 
+                //invertendo os valores dos botoes
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Voce tem certeza?").setPositiveButton("SIM", dialogClickListener)
-                        .setNegativeButton("NAO", dialogClickListener).show();
+                builder.setMessage("Voce tem certeza?").setPositiveButton("NÃO", dialogClickListener)
+                        .setNegativeButton("SIM", dialogClickListener).show();
 
             }
         });

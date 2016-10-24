@@ -147,7 +147,7 @@ public class TabbedMainActivity extends AppCompatActivity {
                 case 0:
                     return "Avisos";
                 case 1:
-                    return "Horarios Semanais";
+                    return "Avisos Fixos";
                 case 2:
                     return "Parceiros";
                 case 3:
