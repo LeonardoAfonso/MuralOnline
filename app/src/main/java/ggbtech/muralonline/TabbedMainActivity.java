@@ -16,9 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
-import ggbtech.muralonline.Classes.HelloWorldEvent;
+import ggbtech.muralonline.Classes.AtualizarEvent;
 import ggbtech.muralonline.Settings.SettingsActivity;
 
 public class TabbedMainActivity extends AppCompatActivity {
@@ -64,7 +63,7 @@ public class TabbedMainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new HelloWorldEvent("Hello EventBus!"));
+                EventBus.getDefault().post(new AtualizarEvent("Hello EventBus!"));
             }
         });
 
@@ -128,7 +127,7 @@ public class TabbedMainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position){
                 case 0 : return TabAvisosFragment.newInstance();
-                case 1 : return TabHorariosSemanaisFragment.newInstance();
+                case 1 : return TabAvisosFixosFragment.newInstance();
                 case 2 : return TabParceirosFragment.newInstance();
                 case 3 : return TabSobreFragment.newInstance();
             }

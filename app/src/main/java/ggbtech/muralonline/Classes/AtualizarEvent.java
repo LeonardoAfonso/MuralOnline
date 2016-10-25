@@ -3,11 +3,11 @@ package ggbtech.muralonline.Classes;
 /**
  * Created by AEDI on 13/10/16.
  */
-public class HelloWorldEvent {
+public class AtualizarEvent {
 
     private final String message;
 
-    public HelloWorldEvent(String message) {
+    public AtualizarEvent(String message) {
         this.message = message;
     }
 

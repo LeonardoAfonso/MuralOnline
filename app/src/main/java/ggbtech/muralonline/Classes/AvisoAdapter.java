@@ -54,24 +54,25 @@ public class AvisoAdapter extends BaseAdapter{
         final int auxPosition = position;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.cardview_aviso_novo, null);
 
         final CardView layout = (CardView)inflater.inflate(R.layout.aviso_cv,null);
-
-
-
-        //layout.setCardBackgroundColor(Color.RED);
 
         int foto = list.get(position).getImagem();
         ImageView imagem = (ImageView) layout.findViewById(R.id.foto);
 
         switch(foto){
-            case 1:imagem.setImageResource(R.drawable.catequetica);break;
-            case 2:imagem.setImageResource(R.drawable.emcri);break;
-            case 3:imagem.setImageResource(R.drawable.familiar);break;
-            case 4:imagem.setImageResource(R.drawable.juventude);break;
-            case 5:imagem.setImageResource(R.drawable.logo_ufpa);break;
-            case 6:imagem.setImageResource(R.drawable.menor);break;
+            case 1:imagem.setImageResource(R.drawable.logo_pastoral_catequetica);break;
+            case 2:imagem.setImageResource(R.drawable.logo_pastoral_dizimo);break;
+            case 3:imagem.setImageResource(R.drawable.logo_pastoral_familiar);break;
+            case 4:imagem.setImageResource(R.drawable.logo_jumire);break;
+            case 5:imagem.setImageResource(R.drawable.logo_pastoral_crianca);break;
+            case 6:imagem.setImageResource(R.drawable.logo_pastoral_menor);break;
+            case 7:imagem.setImageResource(R.drawable.logo_pastoral_pessoa_idosa);
+
+            case 50:imagem.setImageResource(R.drawable.icon_secretaria);break;
+            case 51:imagem.setImageResource(R.drawable.icon_missa);break;
+            case 52:imagem.setImageResource(R.drawable.icon_adoracao);break;
+            case 53:imagem.setImageResource(R.drawable.icon_nossa_senhora);break;
         }
 
         TextView titulo = (TextView) layout.findViewById(R.id.titulo);
@@ -88,26 +89,6 @@ public class AvisoAdapter extends BaseAdapter{
         observacao.setText(list.get(position).getObservacao());
         TextView contato = (TextView) layout.findViewById(R.id.contato);
         contato.setText(list.get(position).getContato());
-
-
-
-
-        /*
-        TextView tv = (TextView) layout.findViewById(R.id.nome);
-        tv.setText(list.get(position).getNome());
-
-
-        Button editarBt = (Button) layout.findViewById(R.id.editar);
-        editarBt.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(context, NewUserActivity.class);
-                intent.putExtra("nome", list.get(auxPosition).getNome());
-                intent.putExtra("email", list.get(auxPosition).getEmail());
-                intent.putExtra("id", list.get(auxPosition).getId());
-                context.startActivity(intent);
-            }
-        });*/
 
         ImageView deletarBt = (ImageView) layout.findViewById(R.id.delete);
         deletarBt.setColorFilter(Color.GRAY);
@@ -132,12 +113,10 @@ public class AvisoAdapter extends BaseAdapter{
                         }
                     }
                 };
-
                 //invertendo os valores dos botoes
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("Voce tem certeza?").setPositiveButton("NÃO", dialogClickListener)
                         .setNegativeButton("SIM", dialogClickListener).show();
-
             }
         });
 

@@ -41,7 +41,7 @@ import java.util.Map;
 
 import ggbtech.muralonline.Classes.Aviso;
 import ggbtech.muralonline.Classes.AvisoAdapter;
-import ggbtech.muralonline.Classes.HelloWorldEvent;
+import ggbtech.muralonline.Classes.AtualizarEvent;
 import ggbtech.muralonline.DB.BD;
 import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
@@ -72,7 +72,7 @@ public class TabAvisosFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tabbed_main, container, false);
-
+        //rootView.setBackgroundResource(R.drawable.background);
         //View mainView = inflater.inflate(R.layout.activity_tabbed_main,container,false);
 
         //FloatingActionButton fab = (FloatingActionButton)mainView.findViewById(R.id.fab);
@@ -262,7 +262,7 @@ public class TabAvisosFragment extends Fragment{
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void event(HelloWorldEvent event){
+    public void event(AtualizarEvent event){
         //Toast.makeText(getActivity(), event.getMessage(), Toast.LENGTH_SHORT).show();
         if(isConnected()){
             callByJsonArrayRequest(null);
