@@ -39,24 +39,24 @@ public class TabParceirosFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_tab_parceiros, container, false);
-        LinearLayout ll = (LinearLayout)rootView.findViewById(R.id.ll3);
+        //LinearLayout ll = (LinearLayout)rootView.findViewById(R.id.ll3);
 
 
         myContext = getContext();
-        rq = Volley.newRequestQueue(myContext);
-        for (int i= 0;i<1;i++){
-            mImageView = (ImageView)  inflater.inflate(R.layout.quadro_parceiro,container,false);
+
+        //for (int i= 0;i<1;i++){
+           // mImageView = (ImageView)  inflater.inflate(R.layout.quadro_parceiro,container,false);
             String url= "https://a2ua.com/imagem/imagem-006.jpg";
             //String url= "http://10.0.2.2/ProjetoAvisos/alarm"+i+".png";
-           // mImageView = (ImageView)rootView.findViewById(R.id.imgview);
-            //mTextView = (TextView)rootView.findViewById(R.id.txtParceiros);
+            mImageView = (ImageView)rootView.findViewById(R.id.imgview);
+            mTextView = (TextView)rootView.findViewById(R.id.txtParceiros);
 
             ImageRequest request = new ImageRequest(
                     url,
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {
-                            //mTextView.setText("Imagem Baixada");
+                            mTextView.setText("Imagem Baixada");
                             mImageView.setImageBitmap(response);
 
                         }
@@ -68,9 +68,10 @@ public class TabParceirosFragment extends Fragment {
                         }
                     });
 
+        rq = Volley.newRequestQueue(myContext);
             rq.add(request);
-            ll.addView(mImageView);
-        }
+            //ll.addView(mImageView);
+
         return rootView;
     }
 }

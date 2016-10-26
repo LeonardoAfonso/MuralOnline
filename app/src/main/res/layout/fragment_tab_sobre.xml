@@ -31,7 +31,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/pinicon"
+                android:src="@drawable/icon_pin"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:id="@+id/pin1"
@@ -67,7 +67,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/pinicon"
+                    android:src="@drawable/icon_pin"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:id="@+id/pin2"
@@ -84,6 +84,149 @@
                     />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:elevation="10dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_pin"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/pin3"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_sobre_convite"
+                    android:id="@+id/texto_sobre_convite"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/pin3"
+                    android:textSize="16sp"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_whatsapp"
+                    android:layout_below="@+id/texto_sobre_convite"
+                    android:id="@+id/icon_whatsapp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="91 9 83257752"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/icon_whatsapp"
+                    android:layout_below="@+id/texto_sobre_convite"
+                    android:layout_alignBottom="@+id/icon_whatsapp"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/whatsapp"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_telefone"
+                    android:id="@+id/icon_telefone"
+                    android:layout_below="@+id/icon_whatsapp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="91 3233 1797 / 91 3264 9061"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_telefone"
+                    android:layout_below="@+id/whatsapp"
+                    android:layout_alignBottom="@+id/icon_telefone"
+                    android:textSize="16sp"
+                    />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:elevation="10dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_pin"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/pin4"
+                    />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/logo_pascom"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignBottom="@+id/texto_sobre_info"
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/logo_pascom"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_sobre_info"
+                    android:id="@+id/texto_sobre_info"
+                    android:textAlignment="center"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="12sp"
+                    />
+
+                <ImageView
+                    android:layout_width="92dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/icon_quadro"
+                    android:id="@+id/icon_quadro"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/pin4"
+                    android:layout_above="@+id/texto_sobre_info"
+                    android:layout_marginRight="35dp"
+                    android:layout_toLeftOf="@+id/pin4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_sobre_paroquia"
+                    android:id="@+id/texto_sobre_paroquia"
+                    android:textAlignment="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/icon_quadro"
+                    android:layout_toRightOf="@+id/texto_sobre_info"
+                    android:textSize="12sp"
+                    />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
 
