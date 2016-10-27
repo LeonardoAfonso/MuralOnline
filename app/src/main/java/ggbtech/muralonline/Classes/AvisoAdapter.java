@@ -67,7 +67,25 @@ public class AvisoAdapter extends BaseAdapter{
             case 4:imagem.setImageResource(R.drawable.logo_jumire);break;
             case 5:imagem.setImageResource(R.drawable.logo_pastoral_crianca);break;
             case 6:imagem.setImageResource(R.drawable.logo_pastoral_menor);break;
-            case 7:imagem.setImageResource(R.drawable.logo_pastoral_pessoa_idosa);
+            case 7:imagem.setImageResource(R.drawable.logo_pastoral_pessoa_idosa);break;
+            case 8:imagem.setImageResource(R.drawable.logo_emcri);break;
+            case 9:imagem.setImageResource(R.drawable.logo_aic);break;
+            case 10:imagem.setImageResource(R.drawable.logo_pastoral_social);break;
+            case 11:imagem.setImageResource(R.drawable.logo_apostolado_oracao);break;
+            case 12:imagem.setImageResource(R.drawable.logo_legiao_maria);break;
+            case 13:imagem.setImageResource(R.drawable.logo_ecc);break;
+            case 14:imagem.setImageResource(R.drawable.logo_escoteiros);break;
+            case 15:imagem.setImageResource(R.drawable.logo_liturgia);break;
+            case 16:imagem.setImageResource(R.drawable.logo_navegantes);break;
+            case 17:imagem.setImageResource(R.drawable.logo_aparecida);break;
+            case 18:imagem.setImageResource(R.drawable.logo_santa_rita);break;
+            case 19:imagem.setImageResource(R.drawable.logo_sagrada_familia);break;
+            case 20:imagem.setImageResource(R.drawable.logo_imaculado_coracao_maria);break;
+            case 21:imagem.setImageResource(R.drawable.logo_jc);break;
+            case 22: imagem.setImageResource(R.drawable.logo_guarda);break;
+            case 23:imagem.setImageResource(R.drawable.logo_ministros_eucaristia);break;
+            case 24:imagem.setImageResource(R.drawable.logo_servidores_altar);break;
+            case 25:imagem.setImageResource(R.drawable.logo_pastoral_batismo);break;
 
             case 50:imagem.setImageResource(R.drawable.icon_secretaria);break;
             case 51:imagem.setImageResource(R.drawable.icon_missa);break;

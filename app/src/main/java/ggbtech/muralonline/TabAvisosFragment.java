@@ -116,6 +116,21 @@ public class TabAvisosFragment extends Fragment{
 
         sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        if(!(sharedpreferences.contains("not"))){
+            SharedPreferences.Editor edt = sharedpreferences.edit();
+            edt.putString("not","0");
+            edt.commit();
+        }else{
+            if(sharedpreferences.getString("not",null) != "0"){
+                SharedPreferences.Editor edt = sharedpreferences.edit();
+                edt.putString("not","0");
+                Log.i("not", "setando pra 0");
+                edt.commit();
+            }
+        }
+
+
+
         if(!(sharedpreferences.contains("url"))){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
@@ -155,7 +170,6 @@ public class TabAvisosFragment extends Fragment{
         return connected;
     }
 
-    //@Subscribe(threadMode = ThreadMode.MAIN)
     public void callByJsonArrayRequest(View view){
         if (exists()){
             SharedPreferences.Editor editor = sharedpreferences.edit();
