@@ -1,10 +1,12 @@
 package ggbtech.muralonline;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +14,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import ggbtech.muralonline.Classes.ParceiroAdapter;
+
 public class TabParceirosFragment extends Fragment {
-    private ImageView mImageView;
     private RequestQueue rq;
     private Context myContext;
-    private TextView mTextView;
+    private List<Bitmap> list;
+    private String url;
+    private String urlImagens;
+    private ParceiroAdapter parceiroAdapter;
+    private int qtdParceiros;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    private SharedPreferences sharedpreferences;
 
     public TabParceirosFragment() {
         // Required empty public constructor
@@ -39,39 +54,63 @@ public class TabParceirosFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_tab_parceiros, container, false);
-        //LinearLayout ll = (LinearLayout)rootView.findViewById(R.id.ll3);
+        final View rl = inflater.inflate(R.layout.quadro_parceiro,container,false);
 
-
+        LinearLayout ll = (LinearLayout)rootView.findViewById(R.id.ll3);
         myContext = getContext();
 
-        //for (int i= 0;i<1;i++){
-           // mImageView = (ImageView)  inflater.inflate(R.layout.quadro_parceiro,container,false);
-            String url= "https://a2ua.com/imagem/imagem-006.jpg";
-            //String url= "http://10.0.2.2/ProjetoAvisos/alarm"+i+".png";
-            mImageView = (ImageView)rootView.findViewById(R.id.imgview);
-            mTextView = (TextView)rootView.findViewById(R.id.txtParceiros);
 
+        rq = Volley.newRequestQueue(myContext);
+
+        sharedpreferences  = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+
+        urlImagens = sharedpreferences.getString("url",null)+"/parceiros/img0.png";
             ImageRequest request = new ImageRequest(
-                    url,
+                    urlImagens,
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {
-                            mTextView.setText("Imagem Baixada");
-                            mImageView.setImageBitmap(response);
-
+                            ImageView img = (ImageView)rl.findViewById(R.id.parceiro1);
+                            img.setImageBitmap(response);
                         }
                     },0 , 0, null, Bitmap.Config.RGB_565,
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            mTextView.setText("Erro ao baixar imagem");
+                            Log.i("img","erro baixando imagem 1");
                         }
                     });
+        request.setTag("imagem");
+        rq.add(request);
 
-        rq = Volley.newRequestQueue(myContext);
-            rq.add(request);
-            //ll.addView(mImageView);
+        urlImagens = sharedpreferences.getString("url",null)+"/parceiros/img1.png";
+            ImageRequest request2 = new ImageRequest(
+                    urlImagens,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap response) {
+                            ImageView img2 = (ImageView) rl.findViewById(R.id.parceiro2);
+                            img2.setImageBitmap(response);
+                        }
+                    },0 , 0, null, Bitmap.Config.RGB_565,
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("img","erro baixando imagem 2");
+                        }
+                    });
+            request2.setTag("imagem");
+            rq.add(request2);
+
+        ll.addView(rl);
 
         return rootView;
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        rq.cancelAll("imagem");
     }
 }

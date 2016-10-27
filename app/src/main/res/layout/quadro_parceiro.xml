@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="100px"
-   android:layout_height="100px"
-   android:id="@+id/imageView" />
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_margin="20dp">
+
+    <ImageView
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:id="@+id/parceiro1"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/ic_launcher"/>
+
+    <ImageView
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:id="@+id/parceiro2"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_launcher"/>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+

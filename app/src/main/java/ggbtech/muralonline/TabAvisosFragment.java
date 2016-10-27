@@ -116,14 +116,13 @@ public class TabAvisosFragment extends Fragment{
 
         sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
-        //url = "http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php";
         if(!(sharedpreferences.contains("url"))){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("url","http://10.0.2.2:8888/ProjetoAvisos/public/consultaAvisos.php");
+            editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
             editor.commit();
         }
 
-        url = sharedpreferences.getString("url",null)  ;//"http://192.168.100.23/ProjetoAvisos/consultaAvisos.php";
+        url = sharedpreferences.getString("url",null)+"consultaAvisos.php";
         rq = Volley.newRequestQueue(myContext);
 
         if(isConnected()){
@@ -160,12 +159,13 @@ public class TabAvisosFragment extends Fragment{
     public void callByJsonArrayRequest(View view){
         if (exists()){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("last_id","0");
+            editor.putString("last_id","1");
             editor.commit();
             Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
         }else{
             Log.i("Shared Preferences","Ja existe");
-            Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));}
+            Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));
+        }
 
         params = new HashMap<String, String>();
         params.put("last_id", sharedpreferences.getString("last_id",null));

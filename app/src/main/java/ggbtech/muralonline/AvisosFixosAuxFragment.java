@@ -79,7 +79,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("8h ate 18h");
         a1.setImagem(50);
-        a1.setLocal("91 90000-0000");
+        a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
@@ -108,7 +108,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("8h ate 18h");
         a1.setImagem(50);
-        a1.setLocal("91 90000-0000");
+        a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         Aviso a2 = new Aviso();
@@ -137,7 +137,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("8h ate 18h");
         a1.setImagem(50);
-        a1.setLocal("91 90000-0000");
+        a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
@@ -166,7 +166,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("8h ate 18h");
         a1.setImagem(50);
-        a1.setLocal("91 90000-0000");
+        a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         Aviso a2 = new Aviso();
@@ -201,7 +201,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("8h ate 18h");
         a1.setImagem(50);
-        a1.setLocal("91 90000-0000");
+        a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
@@ -230,7 +230,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("8h ate 12h");
         a1.setImagem(50);
-        a1.setLocal("91 90000-0000");
+        a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);

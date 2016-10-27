@@ -14,18 +14,7 @@
         android:orientation="vertical"
         android:id="@+id/ll3">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgview"
-            />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Parceiros"
-            android:id="@+id/txtParceiros"
-            android:layout_gravity="center_horizontal|bottom" />
     </LinearLayout>
 
 

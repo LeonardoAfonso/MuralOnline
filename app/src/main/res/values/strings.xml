@@ -18,6 +18,10 @@
         Você faz parte de um grupo, pastoral ou comunidade e precisa divulgar um evento?
     </string>
 
+     <string name="texto_sobre_anuncio">
+         Colabore com a PASCOM e anunciaremos sua Empresa/Negócio aqui
+    </string>
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_aviso">AddAvisoActivity</string>
     <string name="title_activity_aviso_fixos">AvisoFixosActivity</string>

@@ -45,7 +45,7 @@ public class AtualizarAvisosService extends IntentService {
 
         if (exists(sharedpreferences)){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("last_id","0");
+            editor.putString("last_id","1");
             editor.commit();
             Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
         }else{
@@ -55,7 +55,7 @@ public class AtualizarAvisosService extends IntentService {
         params = new HashMap<String, String>();
         params.put("last_id", sharedpreferences.getString("last_id",null));
 
-        url= sharedpreferences.getString("url",null);
+        url= sharedpreferences.getString("url",null)+"consultaAvisos.php";
         //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
 
