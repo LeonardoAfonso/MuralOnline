@@ -1,20 +1,23 @@
 package ggbtech.muralonline;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
 public class TabAvisosFixosFragment extends Fragment {
 
     private FragmentTabHost tabHost;
-    private ViewPager viewPager;
 
     public TabAvisosFixosFragment() {
         // Required empty public constructor
@@ -31,8 +34,27 @@ public class TabAvisosFixosFragment extends Fragment {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_tab_horarios_semanais, container, false);
         tabHost = new FragmentTabHost(getActivity());
-        viewPager = new ViewPager(getContext());
         tabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_tab_horarios_semanais);
+        tabHost.getTabWidget().setBackgroundColor(Color.rgb(28,85,158));
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+                    tabHost.getTabWidget().getChildAt(i)
+                            .setBackgroundColor(Color.WHITE); // unselected
+
+                    TextView tv = (TextView)tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+                    tv.setTextColor(Color.rgb(28,85,158));
+
+                }
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab())
+                        .setBackgroundColor(Color.rgb(28,85,158)); // selected
+                TextView tv = (TextView)tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(android.R.id.title);
+                tv.setTextColor(Color.WHITE);
+            }
+        });
+
 
         Bundle arg1 = new Bundle();
         arg1.putInt("Arg for Frag1", 1);

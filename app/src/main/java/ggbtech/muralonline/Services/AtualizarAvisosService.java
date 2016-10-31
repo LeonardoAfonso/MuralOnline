@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import ggbtech.muralonline.Classes.MySingleton;
 import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
 
@@ -59,7 +60,7 @@ public class AtualizarAvisosService extends IntentService {
         //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
 
-        rq = Volley.newRequestQueue(this);
+        //rq = Volley.newRequestQueue(this);
         callJsonRequest();
         //rq.cancelAll("tag");
     }
@@ -98,7 +99,7 @@ public class AtualizarAvisosService extends IntentService {
                     }
                 });
         request.setTag("tag");
-        rq.add(request);
+        MySingleton.getInstance(this).addToRequestQueue(request);
     }
 
 

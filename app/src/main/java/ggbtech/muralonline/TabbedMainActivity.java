@@ -1,6 +1,12 @@
 package ggbtech.muralonline;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,17 +16,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Calendar;
 
 import ggbtech.muralonline.Classes.AtualizarEvent;
 import ggbtech.muralonline.Settings.SettingsActivity;
 
 public class TabbedMainActivity extends AppCompatActivity {
+    SharedPreferences sharedpreferences;
+    SharedPreferences defSharedPreferences;
+    Boolean valorNot;
+    Context myContext;
+    private Handler mHandler = new Handler();
+    public static final String MyPREFERENCES = "MyPrefs" ;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -38,10 +56,37 @@ public class TabbedMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed_main);
+        myContext=getApplicationContext();
 
-        //EventBus.getDefault().register(this);
+        defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(myContext);
+        valorNot = defSharedPreferences.getBoolean("notifications_new_message",true);
+        Log.i("DefPrefs","notificacao"+valorNot);
+
+        if(valorNot){
+            boolean alarmeAtivo = (PendingIntent.getBroadcast(myContext, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
+
+            if(alarmeAtivo){
+                Log.i("Script", "Novo alarme");
+                Intent intent = new Intent("ALARME_DISPARADO");
+                PendingIntent p = PendingIntent.getBroadcast(myContext, 0, intent, 0);
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(System.currentTimeMillis());
+                c.add(Calendar.SECOND, 3);
+                AlarmManager alarme = (AlarmManager) myContext.getSystemService(Context.ALARM_SERVICE);
+                Log.i("DefPrefs","Sync time :"+defSharedPreferences.getString("sync_frequency","180"));
+                int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
+                alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), min, p);
+                Log.i("DefPrefs","Sync time milli :"+min);
+            }
+            else{
+                Log.i("Script", "Alarme ja ativo");
+                int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
+                Log.i("DefPrefs","Sync time milli :"+min);
+            }
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,14 +95,21 @@ public class TabbedMainActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        int limit = (mSectionsPagerAdapter.getCount() > 1 ? mSectionsPagerAdapter.getCount() - 1 : 1);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(limit);
+        sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        if(!(sharedpreferences.contains("url"))){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
+            editor.commit();
+        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +147,6 @@ public class TabbedMainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
        if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -103,16 +154,6 @@ public class TabbedMainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

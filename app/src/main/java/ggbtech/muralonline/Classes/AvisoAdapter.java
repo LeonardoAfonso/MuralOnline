@@ -86,11 +86,14 @@ public class AvisoAdapter extends BaseAdapter{
             case 23:imagem.setImageResource(R.drawable.logo_ministros_eucaristia);break;
             case 24:imagem.setImageResource(R.drawable.logo_servidores_altar);break;
             case 25:imagem.setImageResource(R.drawable.logo_pastoral_batismo);break;
+            case 26:imagem.setImageResource(R.drawable.logo_pastoral_comunicacao);break;
 
             case 50:imagem.setImageResource(R.drawable.icon_secretaria);break;
             case 51:imagem.setImageResource(R.drawable.icon_missa);break;
             case 52:imagem.setImageResource(R.drawable.icon_adoracao);break;
             case 53:imagem.setImageResource(R.drawable.icon_nossa_senhora);break;
+
+            default:imagem.setImageResource(R.drawable.icon_informe);break;
         }
 
         TextView titulo = (TextView) layout.findViewById(R.id.titulo);

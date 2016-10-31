@@ -2,8 +2,11 @@ package ggbtech.muralonline.Settings;
 
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -18,6 +21,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.List;
@@ -36,6 +40,7 @@ import ggbtech.muralonline.R;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    private static SharedPreferences defSharedPreferences;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -84,9 +89,45 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
+            //String key = preference.getKey();
+            defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
+            String valorAntigo = defSharedPreferences.getString("sync_frequency","180");
+            Log.i("DefPrefs Change","Valor antigo "+valorAntigo);
+            Log.i("DefPrefs Change",preference.getKey());
+            if (preference.getKey().equals("sync_frequency")){
+                Log.i("DefPres Change","Entrou");
+                if(!stringValue.equals(valorAntigo)){
+                    int valor = Integer.parseInt(stringValue);
+                    setAlarm(preference.getContext(),0,valor);
+                }
+            }
             return true;
         }
+
+
+
     };
+
+    public static void setAlarm(Context mContext, int requestCode, int time){
+        Intent myIntent = new Intent("ALARME_DIPARADO");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, requestCode, myIntent,0);
+        cancelAlarmIfExists(mContext,requestCode,myIntent);
+        AlarmManager alarmManager = (AlarmManager)mContext.getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, (System.currentTimeMillis()+time), time*60000, pendingIntent);
+        Log.i("DefPrefs Change","Contruindo Novo Alarme para "+time);
+    }
+
+    public static void cancelAlarmIfExists(Context mContext,int requestCode,Intent intent){
+        try{
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, requestCode, intent,0);
+            AlarmManager am=(AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(pendingIntent);
+            Log.i("DefPrefs Change","Tentando Cancelar alarme ja existente");
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.i("DefPrefs Change","Falhou ao cancelar");
+        }
+    }
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -96,6 +137,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
+
 
     /**
      * Binds a preference's summary to its value. More specifically, when the
@@ -135,6 +177,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     /**
@@ -160,41 +211,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
 
     /**
      * This fragment shows notification preferences only. It is used when the
@@ -254,8 +274,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+
     }
-
-
 
 }

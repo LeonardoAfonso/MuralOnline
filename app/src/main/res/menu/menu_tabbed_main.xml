@@ -3,18 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ggbtech.muralonline.TabbedMainActivity">
     <item
-        android:id="@+id/action_add"
-        android:orderInCategory="100"
-        android:title="Horarios Semanais"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_list"
-        android:orderInCategory="100"
-        android:title="Listar"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Configurações"
+        android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>

@@ -20,7 +20,6 @@ public class AvisosFixosAuxFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     public static AvisosFixosAuxFragment newInstance() {
         AvisosFixosAuxFragment fragment = new AvisosFixosAuxFragment();
         return fragment;
@@ -77,7 +76,7 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
+        a1.setEvento("8h até 18h");
         a1.setImagem(50);
         a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
@@ -106,7 +105,7 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
+        a1.setEvento("8h até 18h");
         a1.setImagem(50);
         a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
@@ -135,7 +134,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
+        a1.setEvento("8h até 18h");
         a1.setImagem(50);
         a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
@@ -164,13 +163,13 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
+        a1.setEvento("8h até 18h");
         a1.setImagem(50);
         a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
 
         Aviso a2 = new Aviso();
-        a2.setTitulo("Adoracao");
+        a2.setTitulo("Adoração");
         a2.setEvento("20h");
         a2.setImagem(52);
         avisosFixos.add(a2);
@@ -199,7 +198,7 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
+        a1.setEvento("8h até 18h");
         a1.setImagem(50);
         a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
@@ -228,7 +227,7 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 12h");
+        a1.setEvento("8h até 12h");
         a1.setImagem(50);
         a1.setLocal("91 3233 1797 / 91 3264 9061");
         avisosFixos.add(a1);
