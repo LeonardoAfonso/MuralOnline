@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -42,6 +43,7 @@ import java.util.Map;
 import ggbtech.muralonline.Classes.Aviso;
 import ggbtech.muralonline.Classes.AvisoAdapter;
 import ggbtech.muralonline.Classes.AtualizarEvent;
+import ggbtech.muralonline.Classes.MySingleton;
 import ggbtech.muralonline.DB.BD;
 import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
@@ -72,28 +74,7 @@ public class TabAvisosFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tabbed_main, container, false);
-        //rootView.setBackgroundResource(R.drawable.background);
-        //View mainView = inflater.inflate(R.layout.activity_tabbed_main,container,false);
-
-        //FloatingActionButton fab = (FloatingActionButton)mainView.findViewById(R.id.fab);
-
         myContext = getContext();
-
-        boolean alarmeAtivo = (PendingIntent.getBroadcast(myContext, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
-
-        if(alarmeAtivo){
-            Log.i("Script", "Novo alarme");
-            Intent intent = new Intent("ALARME_DISPARADO");
-            PendingIntent p = PendingIntent.getBroadcast(myContext, 0, intent, 0);
-            Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(System.currentTimeMillis());
-            c.add(Calendar.SECOND, 3);
-            AlarmManager alarme = (AlarmManager) myContext.getSystemService(Context.ALARM_SERVICE);
-            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 30000, p);
-        }
-        else{
-            Log.i("Script", "Alarme ja ativo");
-        }
 
         mNestedScrollView = (NestedScrollView)rootView.findViewById(R.id.nestedLayout);
         mLinearLayout = new LinearLayout(myContext);
@@ -130,15 +111,16 @@ public class TabAvisosFragment extends Fragment{
         }
 
 
-
+        /*
         if(!(sharedpreferences.contains("url"))){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
             editor.commit();
-        }
+        }*/
 
         url = sharedpreferences.getString("url",null)+"consultaAvisos.php";
-        rq = Volley.newRequestQueue(myContext);
+        //rq = MySingleton.getInstance(myContext).getRequestQueue();
+        //Volley.newRequestQueue(myContext);
 
         if(isConnected()){
             callByJsonArrayRequest(null);
@@ -260,7 +242,7 @@ public class TabAvisosFragment extends Fragment{
                 });
 
         request.setTag("tag");
-        rq.add(request);
+        MySingleton.getInstance(myContext).addToRequestQueue(request);
     }
 
     @Override
@@ -277,7 +259,6 @@ public class TabAvisosFragment extends Fragment{
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void event(AtualizarEvent event){
-        //Toast.makeText(getActivity(), event.getMessage(), Toast.LENGTH_SHORT).show();
         if(isConnected()){
             callByJsonArrayRequest(null);
         }else{
@@ -285,9 +266,4 @@ public class TabAvisosFragment extends Fragment{
         }
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        rq.cancelAll("tag");
-    }
 }

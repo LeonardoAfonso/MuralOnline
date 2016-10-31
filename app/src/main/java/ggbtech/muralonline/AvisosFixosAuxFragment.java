@@ -20,7 +20,6 @@ public class AvisosFixosAuxFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     public static AvisosFixosAuxFragment newInstance() {
         AvisosFixosAuxFragment fragment = new AvisosFixosAuxFragment();
         return fragment;
@@ -49,7 +48,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         //View card = inflater.inflate(R.layout.aviso_cv,container,false);
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
         Aviso a = new Aviso();
-        a.setTitulo("Missa");
+        a.setTitulo("Missas");
         a.setEvento("07h - 8:30h - 17:30h - 19h");
         a.setImagem(51);
         avisosFixos.add(a);
@@ -69,18 +68,18 @@ public class AvisosFixosAuxFragment extends Fragment {
 
     public void tabSeg(View v){
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
+        Aviso a1 = new Aviso();
+        a1.setTitulo("Secretaria");
+        a1.setEvento("7:30h até 12h / 13:30h até 18h");
+        a1.setImagem(50);
+        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        avisosFixos.add(a1);
+
         Aviso a = new Aviso();
         a.setTitulo("Missa");
         a.setEvento("19h");
         a.setImagem(51);
         avisosFixos.add(a);
-
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
-        a1.setImagem(50);
-        a1.setLocal("91 3233 1797 / 91 3264 9061");
-        avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
@@ -98,22 +97,22 @@ public class AvisosFixosAuxFragment extends Fragment {
 
     public void tabTer(View v){
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
+        Aviso a1 = new Aviso();
+        a1.setTitulo("Secretaria");
+        a1.setEvento("7:30h até 12h / 13:30h até 18h");
+        a1.setImagem(50);
+        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        avisosFixos.add(a1);
+
         Aviso a = new Aviso();
-        a.setTitulo("Missa");
-        a.setEvento("05h - 17h");
+        a.setTitulo("Missas");
+        a.setEvento("05:30h - 6:30h - 17:30h");
         a.setImagem(51);
         avisosFixos.add(a);
 
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
-        a1.setImagem(50);
-        a1.setLocal("91 3233 1797 / 91 3264 9061");
-        avisosFixos.add(a1);
-
         Aviso a2 = new Aviso();
-        a2.setTitulo("Novena");
-        a2.setEvento("06h - 07h - 08h - 09h - 10h - 11h - 12h - 13h - 14h - 15h - 16h - 18h - 19h - 20h - 21h");
+        a2.setTitulo("Novenas");
+        a2.setEvento("06h (25 minutos) - 07h - 08h - 09h - 10h - 11h - 12h - 13h - 14h - 15h - 16h - 18h - 19h - 20h - 21h");
         a2.setImagem(53);
         avisosFixos.add(a2);
 
@@ -135,9 +134,9 @@ public class AvisosFixosAuxFragment extends Fragment {
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
         Aviso a1 = new Aviso();
         a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
+        a1.setEvento("7:30h até 12h / 13:30h até 18h");
         a1.setImagem(50);
-        a1.setLocal("91 3233 1797 / 91 3264 9061");
+        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
@@ -156,21 +155,21 @@ public class AvisosFixosAuxFragment extends Fragment {
 
     public void tabQui(View v){
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
+        Aviso a1 = new Aviso();
+        a1.setTitulo("Secretaria");
+        a1.setEvento("7:30h até 12h / 13:30h até 18h");
+        a1.setImagem(50);
+        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        avisosFixos.add(a1);
+
         Aviso a = new Aviso();
         a.setTitulo("Missa");
         a.setEvento("19h");
         a.setImagem(51);
         avisosFixos.add(a);
 
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
-        a1.setImagem(50);
-        a1.setLocal("91 3233 1797 / 91 3264 9061");
-        avisosFixos.add(a1);
-
         Aviso a2 = new Aviso();
-        a2.setTitulo("Adoracao");
+        a2.setTitulo("Adoração");
         a2.setEvento("20h");
         a2.setImagem(52);
         avisosFixos.add(a2);
@@ -191,18 +190,18 @@ public class AvisosFixosAuxFragment extends Fragment {
 
     public void tabSex(View v){
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
+        Aviso a1 = new Aviso();
+        a1.setTitulo("Secretaria");
+        a1.setEvento("7:30h até 12h / 13:30h até 18h");
+        a1.setImagem(50);
+        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        avisosFixos.add(a1);
+
         Aviso a = new Aviso();
         a.setTitulo("Missa");
         a.setEvento("19h");
         a.setImagem(51);
         avisosFixos.add(a);
-
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 18h");
-        a1.setImagem(50);
-        a1.setLocal("91 3233 1797 / 91 3264 9061");
-        avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
@@ -220,18 +219,25 @@ public class AvisosFixosAuxFragment extends Fragment {
 
     public void tabSab(View v){
         ArrayList<Aviso> avisosFixos = new ArrayList<>();
+        Aviso a1 = new Aviso();
+        a1.setTitulo("Secretaria");
+        a1.setEvento("7:30h até 11:30h");
+        a1.setImagem(50);
+        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        avisosFixos.add(a1);
+
+        /*Aviso a2 = new Aviso();
+        a2.setTitulo("Pároco Informa");
+        a2.setEvento("Todo o 1º sábado de mês, reunião com todos os coordenadores de comunidades");
+        a2.setLocal("15h");
+        a2.setImagem(50);
+        avisosFixos.add(a2);*/
+
         Aviso a = new Aviso();
         a.setTitulo("Missa");
         a.setEvento("19h");
         a.setImagem(51);
         avisosFixos.add(a);
-
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("8h ate 12h");
-        a1.setImagem(50);
-        a1.setLocal("91 3233 1797 / 91 3264 9061");
-        avisosFixos.add(a1);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
