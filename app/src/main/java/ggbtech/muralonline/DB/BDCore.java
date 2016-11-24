@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BDCore extends SQLiteOpenHelper {
     private static final String NOME_BD = "teste";
-    private static final int VERSAO_BD = 9;
+    private static final int VERSAO_BD = 10;
 
     private static BDCore mInstance = null;
 

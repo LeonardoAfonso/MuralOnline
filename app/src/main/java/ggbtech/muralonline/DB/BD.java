@@ -51,6 +51,9 @@ public class BD {
         bd.delete("aviso", "_id ="+aviso.getId(), null);
     }
 
+    public void esvaziarBanco(){
+        bd.delete("aviso",null,null);
+    }
 
     public List<Aviso> buscar(){
         List<Aviso> list = new ArrayList<Aviso>();

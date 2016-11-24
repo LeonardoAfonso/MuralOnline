@@ -54,9 +54,9 @@ public class AtualizarAvisosService extends IntentService {
             Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));}
 
         params = new HashMap<String, String>();
-        params.put("last_id", sharedpreferences.getString("last_id",null));
+        params.put("last_id","0");//sharedpreferences.getString("last_id",null));
 
-        url= sharedpreferences.getString("url",null)+"consultaAvisos.php";
+        url= sharedpreferences.getString("url",null)+"consultaAvisosTeste.php";
         //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
 
@@ -75,17 +75,15 @@ public class AtualizarAvisosService extends IntentService {
                         Log.i("Script", "SUCCESS: "+response);
                         JSONObject json;
                         try {
-                            json = response.getJSONObject(0);
-                            if(json.has("sit")){
-                                try {
-                                    String sit = json.getString("sit");
-                                    Log.i("Script", "Sit = "+sit);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                            int length = response.length();
+                            json = response.getJSONObject(length-1);
+                            int lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
+                            int lastId_novo = json.getInt("avisos_id");
+                            if((lastId_novo-lastId_antigo) == 0){
+                                Log.i("Script","Atualizado");
                             }else{
                                 Intent it = new Intent("NOVOS_AVISOS");
-                                it.putExtra("num_avisos",response.length());
+                                it.putExtra("num_avisos",lastId_novo-lastId_antigo);
                                 sendBroadcast(it);
                             }
                         } catch (JSONException e) {

@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ public class TabAvisosFragment extends Fragment{
     private Map<String, String> params;
     private RequestQueue rq;
     NestedScrollView mNestedScrollView;
+    SwipeRefreshLayout swipeRefreshLayout;
     LinearLayout mLinearLayout;
     private Context myContext;
     Button btn;
@@ -76,12 +78,14 @@ public class TabAvisosFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_tabbed_main, container, false);
         myContext = getContext();
 
-        mNestedScrollView = (NestedScrollView)rootView.findViewById(R.id.nestedLayout);
+        mNestedScrollView = (NestedScrollView) rootView.findViewById(R.id.nestedLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swiperefresh);
         mLinearLayout = new LinearLayout(myContext);
         btn = new Button(myContext);
         mLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         mLinearLayout.setOrientation(LinearLayout.VERTICAL);
         mLinearLayout.setPadding(10,10,10,10);
+        mLinearLayout.setClickable(true);
 
         BD bd = new BD(myContext);
         List<Aviso> list = bd.buscar();
@@ -94,6 +98,12 @@ public class TabAvisosFragment extends Fragment{
         }
 
         mNestedScrollView.addView(mLinearLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i("Script", "rereshing");
+            }
+        });
 
         sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -118,7 +128,7 @@ public class TabAvisosFragment extends Fragment{
             editor.commit();
         }*/
 
-        url = sharedpreferences.getString("url",null)+"consultaAvisos.php";
+        url = sharedpreferences.getString("url",null)+"consultaAvisosTeste.php";
         //rq = MySingleton.getInstance(myContext).getRequestQueue();
         //Volley.newRequestQueue(myContext);
 
@@ -139,10 +149,15 @@ public class TabAvisosFragment extends Fragment{
     }
 
     public String novosAvisos(int length){
-        if (length == 1)
-            return "Você tem "+ length +" novo aviso";
-        else
-            return "Você tem "+length+" novos avisos";
+        Log.i("Script","Tamanho "+length);
+        if (length == 0){
+            return "Atualizado";
+        }else {
+            if (length == 1)
+                return "Você tem " + length + " novo aviso";
+            else
+                return "Você tem " + length + " novos avisos";
+        }
     }
 
     public Boolean isConnected(){
@@ -155,7 +170,7 @@ public class TabAvisosFragment extends Fragment{
     public void callByJsonArrayRequest(View view){
         if (exists()){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("last_id","1");
+            editor.putString("last_id","0");
             editor.commit();
             Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
         }else{
@@ -164,8 +179,9 @@ public class TabAvisosFragment extends Fragment{
         }
 
         params = new HashMap<String, String>();
-        params.put("last_id", sharedpreferences.getString("last_id",null));
-        Log.i("Script", "last_id: "+sharedpreferences.getString("last_id",null));
+        params.put("last_id","0" );//sharedpreferences.getString("last_id",null));
+        //Log.i("Script", "last_id: "+sharedpreferences.getString("last_id",null));
+        Log.i("Script","last_id 0");
 
         CustomJSONArrayRequest request = new CustomJSONArrayRequest(Request.Method.POST,
                 url,
@@ -191,6 +207,7 @@ public class TabAvisosFragment extends Fragment{
                                 }
 
                             }else{
+                                bd2.esvaziarBanco();
                                 for (int i=0;i<response.length();i++){
                                     json = response.getJSONObject(i);
                                     Log.i("ID :", String.valueOf(json.getInt("avisos_id")));
@@ -205,11 +222,14 @@ public class TabAvisosFragment extends Fragment{
                                     aviso.setContato(json.getString("contato"));
                                     bd2.inserir(aviso);
                                 }
+                                Log.i("Script","atualizando Last_id :"+sharedpreferences.getString("last_id",null));
+                                int lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
+                                int lastId_novo = json.getInt("avisos_id");
+                                Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
+                                Snackbar.make(mNestedScrollView, novosAvisos(lastId_novo-lastId_antigo), Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                                 editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
                                 editor.commit();
-                                Log.i("Atualizando SP","Last_id :"+sharedpreferences.getString("last_id",null));
-                                Snackbar.make(mNestedScrollView, novosAvisos(response.length()), Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
