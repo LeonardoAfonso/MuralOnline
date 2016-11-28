@@ -59,7 +59,7 @@ public class BD {
         List<Aviso> list = new ArrayList<Aviso>();
         String[] colunas = new String[]{"_id", "imagem", "titulo", "evento", "local", "data", "hora", "observacao", "contato"};
 
-        Cursor cursor = bd.query("aviso", colunas, null, null, null, null, "_id ASC");
+        Cursor cursor = bd.query("aviso", colunas, null, null, null, null, "data DESC");
 
         if(cursor.getCount() > 0){
             cursor.moveToFirst();

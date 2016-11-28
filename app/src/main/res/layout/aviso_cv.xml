@@ -75,16 +75,6 @@ android:id="@+id/cv_aviso">
         android:textSize="15sp"
         />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/delete"
-        android:onClick=""
-        android:src="@android:drawable/ic_menu_delete"
-        android:layout_alignBottom="@+id/obs"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <TextView
         android:layout_width="250dp"
         android:layout_height="wrap_content"

@@ -60,7 +60,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }
@@ -88,7 +87,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }
@@ -123,7 +121,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }
@@ -146,7 +143,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }
@@ -181,7 +177,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }
@@ -210,7 +205,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }
@@ -246,7 +240,6 @@ public class AvisosFixosAuxFragment extends Fragment {
 
         for (int j = 0; j <adapterCount ; j++) {
             View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.delete).setVisibility(View.GONE);
             item.findViewById(R.id.hora).setVisibility(View.GONE);
             mLinearLayout.addView(item);
         }

@@ -16,7 +16,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:elevation="10dp"
         android:layout_marginLeft="10dp"
@@ -47,7 +47,6 @@
                 android:layout_toRightOf="@+id/foto"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/pin1"
-                android:textSize="16sp"
                 />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
@@ -83,7 +82,6 @@
                     android:id="@+id/texto_sobre_convite"
                     android:layout_alignParentTop="true"
                     android:layout_toLeftOf="@+id/pin2"
-                    android:textSize="16sp"
                     />
 
                 <ImageView
@@ -101,7 +99,6 @@
                     android:layout_toRightOf="@+id/icon_whatsapp"
                     android:layout_below="@+id/texto_sobre_convite"
                     android:layout_alignBottom="@+id/icon_whatsapp"
-                    android:textSize="16sp"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/whatsapp"
                     />
@@ -122,7 +119,6 @@
                     android:layout_toRightOf="@+id/icon_telefone"
                     android:layout_below="@+id/whatsapp"
                     android:layout_alignBottom="@+id/icon_telefone"
-                    android:textSize="16sp"
                     android:id="@+id/texto_sobre_cel"
                     />
 
@@ -133,8 +129,6 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_below="@+id/texto_sobre_cel"
-                    android:layout_alignParentBottom="true"
-                    android:textSize="16sp"
                     android:id="@+id/texto_acesse"
                     />
 
@@ -143,65 +137,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:elevation="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardUseCompatPadding="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:rotation="45"
-                    android:src="@drawable/icon_pin"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/pin5"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/texto_sobre_anuncio"
-                    android:id="@+id/texto_sobre_anuncio"
-                    android:layout_toRightOf="@+id/foto"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/pin5"
-                    android:textSize="16sp"
-                    />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/icon_bullhorn"
-                    android:layout_below="@+id/texto_sobre_anuncio"
-                    android:id="@+id/icon_bullhorn"
-                    android:layout_marginTop="10dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/texto_sobre_contato"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/icon_bullhorn"
-                    android:layout_below="@+id/texto_sobre_anuncio"
-                    android:textSize="16sp"
-                    />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:elevation="10dp"
             android:layout_marginLeft="10dp"
@@ -241,14 +177,13 @@
                     android:textAlignment="center"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
-                    android:textSize="16sp"
                     />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:elevation="10dp"
             android:layout_marginLeft="10dp"
@@ -275,7 +210,6 @@
                     android:layout_width="110dp"
                     android:layout_height="82dp"
                     android:src="@drawable/icon_quadro"
-                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/icon_quadro"
                     />
@@ -288,8 +222,7 @@
                     android:textAlignment="center"
                     android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
-                    android:textSize="16sp"
+                    android:layout_below="@+id/icon_quadro"
                     />
             </RelativeLayout>
         </android.support.v7.widget.CardView>

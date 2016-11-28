@@ -5,8 +5,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ggbtech.muralonline.TabbedMainActivity"
-    tools:showIn="@layout/activity_tabbed_main"
+    tools:context=".TabSobreFragment"
     android:id="@+id/nestedLayout">
+
 </android.support.v4.widget.NestedScrollView>
 

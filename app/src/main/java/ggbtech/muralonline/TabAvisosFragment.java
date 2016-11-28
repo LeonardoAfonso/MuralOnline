@@ -17,8 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -53,16 +55,15 @@ public class TabAvisosFragment extends Fragment{
     private String url;
     private int adapterCount;
     private Map<String, String> params;
-    private RequestQueue rq;
-    NestedScrollView mNestedScrollView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    LinearLayout mLinearLayout;
+    private NestedScrollView mNestedScrollView;
+    private  LinearLayout mLinearLayout;
     private Context myContext;
-    Button btn;
-    Aviso aviso = new Aviso();
-    SharedPreferences sharedpreferences;
+    public Aviso aviso = new Aviso();
+    private  SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs" ;
-    
+    private int lastId_novo;
+    private int lastId_antigo;
+
     public TabAvisosFragment() {
         // Required empty public constructor
     }
@@ -79,14 +80,10 @@ public class TabAvisosFragment extends Fragment{
         myContext = getContext();
 
         mNestedScrollView = (NestedScrollView) rootView.findViewById(R.id.nestedLayout);
-        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swiperefresh);
         mLinearLayout = new LinearLayout(myContext);
-        btn = new Button(myContext);
         mLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         mLinearLayout.setOrientation(LinearLayout.VERTICAL);
         mLinearLayout.setPadding(10,10,10,10);
-        mLinearLayout.setClickable(true);
-
         BD bd = new BD(myContext);
         List<Aviso> list = bd.buscar();
         final AvisoAdapter avisoAdapter = new AvisoAdapter(myContext,list);
@@ -98,13 +95,6 @@ public class TabAvisosFragment extends Fragment{
         }
 
         mNestedScrollView.addView(mLinearLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.i("Script", "rereshing");
-            }
-        });
-
         sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         if(!(sharedpreferences.contains("not"))){
@@ -121,16 +111,14 @@ public class TabAvisosFragment extends Fragment{
         }
 
 
-        /*
+
         if(!(sharedpreferences.contains("url"))){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
             editor.commit();
-        }*/
+        }
 
         url = sharedpreferences.getString("url",null)+"consultaAvisosTeste.php";
-        //rq = MySingleton.getInstance(myContext).getRequestQueue();
-        //Volley.newRequestQueue(myContext);
 
         if(isConnected()){
             callByJsonArrayRequest(null);
@@ -178,11 +166,9 @@ public class TabAvisosFragment extends Fragment{
             Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));
         }
 
-        params = new HashMap<String, String>();
-        params.put("last_id","0" );//sharedpreferences.getString("last_id",null));
-        //Log.i("Script", "last_id: "+sharedpreferences.getString("last_id",null));
+        params = new HashMap<>();
+        params.put("last_id","0" );
         Log.i("Script","last_id 0");
-
         CustomJSONArrayRequest request = new CustomJSONArrayRequest(Request.Method.POST,
                 url,
                 params,
@@ -191,46 +177,39 @@ public class TabAvisosFragment extends Fragment{
                     public void onResponse(JSONArray response) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         Log.i("Script", "SUCCESS: "+response);
-                        JSONObject json;
+                        JSONObject json = null;
                         BD bd2 = new BD(myContext);
                         try {
-                            json = response.getJSONObject(0);
-                            if(json.has("sit")){
-                                Log.i("Script", "SUCCESS: "+response);
-                                try {
-                                    String sit = (String) json.getString("sit");
-                                    Log.i("Script", "Sit = "+sit);
-                                    Snackbar.make(mNestedScrollView, "Atualizado", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }else{
-                                bd2.esvaziarBanco();
-                                for (int i=0;i<response.length();i++){
-                                    json = response.getJSONObject(i);
-                                    Log.i("ID :", String.valueOf(json.getInt("avisos_id")));
-                                    aviso.setId(json.getInt("avisos_id"));
-                                    aviso.setImagem(json.getInt("grupo_id"));
-                                    aviso.setTitulo(json.getString("titulo"));
-                                    aviso.setEvento(json.getString("evento"));
-                                    aviso.setLocal(json.getString("local"));
-                                    aviso.setData(json.getString("data"));
-                                    aviso.setHora(json.getString("hora"));
-                                    aviso.setObservacao(json.getString("observacao"));
-                                    aviso.setContato(json.getString("contato"));
-                                    bd2.inserir(aviso);
-                                }
+                            bd2.esvaziarBanco();
+                            for (int i=0;i<response.length();i++){
+                                json = response.getJSONObject(i);
+                                Log.i("ID :", String.valueOf(json.getInt("avisos_id")));
+                                aviso.setId(json.getInt("avisos_id"));
+                                aviso.setImagem(json.getInt("grupo_id"));
+                                aviso.setTitulo(json.getString("titulo"));
+                                aviso.setEvento(json.getString("evento"));
+                                aviso.setLocal(json.getString("local"));
+                                aviso.setData(json.getString("data"));
+                                aviso.setHora(json.getString("hora"));
+                                aviso.setObservacao(json.getString("observacao"));
+                                aviso.setContato(json.getString("contato"));
+                                bd2.inserir(aviso);
+                            }
                                 Log.i("Script","atualizando Last_id :"+sharedpreferences.getString("last_id",null));
-                                int lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
-                                int lastId_novo = json.getInt("avisos_id");
+                                lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
+                            if (sharedpreferences.getBoolean("firstrun", true)) {
+                                lastId_novo =response.length();
+                                sharedpreferences.edit().putBoolean("firstrun", false).commit();
+                            }else{
+                                lastId_novo = json.getInt("avisos_id");
+                            }
+                                
                                 Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
                                 Snackbar.make(mNestedScrollView, novosAvisos(lastId_novo-lastId_antigo), Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
                                 editor.commit();
-                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
 
@@ -238,6 +217,8 @@ public class TabAvisosFragment extends Fragment{
                         mLinearLayout.removeAllViews();
                         List<Aviso> list = bd2.buscar();
                         final AvisoAdapter avisoAdapter = new AvisoAdapter(myContext,list);
+
+
                         adapterCount = avisoAdapter.getCount();
 
                         for (int j = adapterCount-1; j >=0 ; j--) {

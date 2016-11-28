@@ -111,36 +111,6 @@ public class AvisoAdapter extends BaseAdapter{
         TextView contato = (TextView) layout.findViewById(R.id.contato);
         contato.setText(list.get(position).getContato());
 
-        ImageView deletarBt = (ImageView) layout.findViewById(R.id.delete);
-        deletarBt.setColorFilter(Color.GRAY);
-        deletarBt.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_NEGATIVE://valor invertido POSITIVE
-                                //Yes button clicked
-                                BD bd = new BD(context);
-                                bd.deletar(list.get(auxPosition));
-                                layout.setVisibility(View.GONE);
-                                Toast.makeText(context, "Aviso excluido", Toast.LENGTH_LONG).show();
-                                break;
-
-                            case DialogInterface.BUTTON_POSITIVE://valor invertido NEGATIVE
-                                //No button clicked
-                                break;
-                        }
-                    }
-                };
-                //invertendo os valores dos botoes
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Voce tem certeza?").setPositiveButton("NÃO", dialogClickListener)
-                        .setNegativeButton("SIM", dialogClickListener).show();
-            }
-        });
-
         return layout;
     }
 
