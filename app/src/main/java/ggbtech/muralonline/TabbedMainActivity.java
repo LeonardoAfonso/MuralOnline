@@ -18,9 +18,11 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -158,6 +160,8 @@ public class TabbedMainActivity extends AppCompatActivity {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        String tabTitles[] = new String[] { "Avisos", "Avisos Fixos", "Parcerias", "Sobre", };
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -177,7 +181,6 @@ public class TabbedMainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 4;
         }
 
@@ -195,5 +198,8 @@ public class TabbedMainActivity extends AppCompatActivity {
             }
             return null;
         }
+
+
+
     }
 }

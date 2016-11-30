@@ -4,8 +4,11 @@ package ggbtech.muralonline.DB;
  * Created by AEDI on 17/05/16.
  */
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -59,7 +62,7 @@ public class BD {
         List<Aviso> list = new ArrayList<Aviso>();
         String[] colunas = new String[]{"_id", "imagem", "titulo", "evento", "local", "data", "hora", "observacao", "contato"};
 
-        Cursor cursor = bd.query("aviso", colunas, null, null, null, null, "data DESC");
+        Cursor cursor = bd.query("aviso", colunas, null, null, null, null, "date(data) DESC");
 
         if(cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -72,7 +75,15 @@ public class BD {
                 a.setTitulo(cursor.getString(2));
                 a.setEvento(cursor.getString(3));
                 a.setLocal(cursor.getString(4));
-                a.setData(cursor.getString(5));
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+                try{
+                    String dt = myFormat.format(fromUser.parse(cursor.getString(5)));
+                    a.setData(dt);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 a.setHora(cursor.getString(6));
                 a.setObservacao(cursor.getString(7));
                 a.setContato(cursor.getString(8));

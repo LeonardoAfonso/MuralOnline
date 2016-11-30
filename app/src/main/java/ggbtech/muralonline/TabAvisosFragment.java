@@ -179,51 +179,58 @@ public class TabAvisosFragment extends Fragment{
                         Log.i("Script", "SUCCESS: "+response);
                         JSONObject json = null;
                         BD bd2 = new BD(myContext);
-                        try {
+                        if (response.length()>0){
+                            try {
+                                bd2.esvaziarBanco();
+                                for (int i=0;i<response.length();i++){
+                                    json = response.getJSONObject(i);
+                                    Log.i("ID :", String.valueOf(json.getInt("avisos_id")));
+                                    aviso.setId(json.getInt("avisos_id"));
+                                    aviso.setImagem(json.getInt("grupo_id"));
+                                    aviso.setTitulo(json.getString("titulo"));
+                                    aviso.setEvento(json.getString("evento"));
+                                    aviso.setLocal(json.getString("local"));
+                                    aviso.setData(json.getString("data"));
+                                    aviso.setHora(json.getString("hora"));
+                                    aviso.setObservacao(json.getString("observacao"));
+                                    aviso.setContato(json.getString("contato"));
+                                    bd2.inserir(aviso);
+                                }
+                                    Log.i("Script","atualizando Last_id :"+sharedpreferences.getString("last_id",null));
+                                    lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
+                                if (sharedpreferences.getBoolean("firstrun", true)) {
+                                    lastId_novo =response.length();
+                                    sharedpreferences.edit().putBoolean("firstrun", false).commit();
+                                }else{
+                                    lastId_novo = json.getInt("avisos_id");
+                                }
+
+                                    Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
+                                    Snackbar.make(mNestedScrollView, novosAvisos(lastId_novo-lastId_antigo), Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                    editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
+                                    editor.commit();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+
+                            }
+                            mLinearLayout.removeAllViews();
+                            List<Aviso> list = bd2.buscar();
+                            final AvisoAdapter avisoAdapter = new AvisoAdapter(myContext,list);
+
+
+                            adapterCount = avisoAdapter.getCount();
+
+                            for (int j = adapterCount-1; j >=0 ; j--) {
+                                View item = avisoAdapter.getView(j, null, null);
+                                mLinearLayout.addView(item);
+                            }
+                        }else{
                             bd2.esvaziarBanco();
-                            for (int i=0;i<response.length();i++){
-                                json = response.getJSONObject(i);
-                                Log.i("ID :", String.valueOf(json.getInt("avisos_id")));
-                                aviso.setId(json.getInt("avisos_id"));
-                                aviso.setImagem(json.getInt("grupo_id"));
-                                aviso.setTitulo(json.getString("titulo"));
-                                aviso.setEvento(json.getString("evento"));
-                                aviso.setLocal(json.getString("local"));
-                                aviso.setData(json.getString("data"));
-                                aviso.setHora(json.getString("hora"));
-                                aviso.setObservacao(json.getString("observacao"));
-                                aviso.setContato(json.getString("contato"));
-                                bd2.inserir(aviso);
-                            }
-                                Log.i("Script","atualizando Last_id :"+sharedpreferences.getString("last_id",null));
-                                lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
-                            if (sharedpreferences.getBoolean("firstrun", true)) {
-                                lastId_novo =response.length();
-                                sharedpreferences.edit().putBoolean("firstrun", false).commit();
-                            }else{
-                                lastId_novo = json.getInt("avisos_id");
-                            }
-                                
-                                Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
-                                Snackbar.make(mNestedScrollView, novosAvisos(lastId_novo-lastId_antigo), Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                                editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
-                                editor.commit();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-
-                        }
-                        mLinearLayout.removeAllViews();
-                        List<Aviso> list = bd2.buscar();
-                        final AvisoAdapter avisoAdapter = new AvisoAdapter(myContext,list);
-
-
-                        adapterCount = avisoAdapter.getCount();
-
-                        for (int j = adapterCount-1; j >=0 ; j--) {
-                            View item = avisoAdapter.getView(j, null, null);
-                            mLinearLayout.addView(item);
+                            mLinearLayout.removeAllViews();
+                            Snackbar.make(mNestedScrollView, novosAvisos(0), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
                         }
                     }
                 },
