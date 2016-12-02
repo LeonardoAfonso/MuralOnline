@@ -72,7 +72,7 @@ public class AtualizarAvisosService extends IntentService {
                 new Response.Listener<JSONArray>(){
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.i("Script", "SUCCESS: "+response);
+                        Log.i("Script", "SUCCESS service: "+response);
                         JSONObject json;
                         try {
                             int length = response.length();

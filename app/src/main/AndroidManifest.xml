@@ -14,6 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -21,6 +22,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".Settings.SettingsActivity"
             android:label="@string/title_activity_settings">
@@ -59,8 +61,7 @@
         <service
             android:name=".Services.bootService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"></service>
 
         <receiver
             android:name=".Receiver.bootReceiver"
@@ -83,6 +84,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

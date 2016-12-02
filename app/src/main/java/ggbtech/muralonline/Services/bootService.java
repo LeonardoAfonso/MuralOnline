@@ -5,7 +5,6 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -35,7 +34,7 @@ public class bootService extends IntentService {
         }
         else{
             Log.i("Script", "Alarme ja ativo");
-            int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency",null))*60000;
+            int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
             Log.i("DefPrefs","Sync time milli :"+min);
         }
 

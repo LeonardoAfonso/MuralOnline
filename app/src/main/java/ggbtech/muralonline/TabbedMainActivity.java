@@ -154,6 +154,10 @@ public class TabbedMainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
+        }else if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -174,14 +178,14 @@ public class TabbedMainActivity extends AppCompatActivity {
                 case 0 : return TabAvisosFragment.newInstance();
                 case 1 : return TabAvisosFixosFragment.newInstance();
                 case 2 : return TabParceirosFragment.newInstance();
-                case 3 : return TabSobreFragment.newInstance();
+                //case 3 : return TabSobreFragment.newInstance();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -193,8 +197,8 @@ public class TabbedMainActivity extends AppCompatActivity {
                     return "Avisos Fixos";
                 case 2:
                     return "Parceiros";
-                case 3:
-                    return "Sobre";
+                //case 3:
+                  //  return "Sobre";
             }
             return null;
         }
