@@ -182,7 +182,6 @@ public class TabbedMainActivity extends AppCompatActivity {
                 case 0 : return TabAvisosFragment.newInstance();
                 case 1 : return TabAvisosFixosFragment.newInstance();
                 case 2 : return TabParceirosFragment.newInstance();
-                //case 3 : return TabSobreFragment.newInstance();
             }
             return null;
         }
