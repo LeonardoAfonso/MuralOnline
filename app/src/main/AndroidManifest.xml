@@ -61,7 +61,7 @@
         <service
             android:name=".Services.bootService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <receiver
             android:name=".Receiver.bootReceiver"
@@ -78,16 +78,24 @@
             android:name=".TabbedMainActivity"
             android:label="@string/app_name"
             android:theme="@style/splashScreenTheme">
+        </activity>
+
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".CheckVersionActivity"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

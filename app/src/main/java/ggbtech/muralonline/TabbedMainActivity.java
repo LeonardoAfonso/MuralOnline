@@ -3,12 +3,18 @@ package ggbtech.muralonline;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -24,6 +30,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -32,29 +44,18 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Calendar;
 
 import ggbtech.muralonline.Classes.AtualizarEvent;
+import ggbtech.muralonline.Classes.MySingleton;
 import ggbtech.muralonline.Settings.SettingsActivity;
 
 public class TabbedMainActivity extends AppCompatActivity {
-    SharedPreferences sharedpreferences;
-    SharedPreferences defSharedPreferences;
-    Boolean valorNot;
-    Context myContext;
-    private Handler mHandler = new Handler();
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences defSharedPreferences;
+    private Boolean valorNot;
+    private Context myContext;
     public static final String MyPREFERENCES = "MyPrefs" ;
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class TabbedMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed_main);
         myContext=getApplicationContext();
+
+
 
         defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(myContext);
         valorNot = defSharedPreferences.getBoolean("notifications_new_message",true);
@@ -162,6 +165,7 @@ public class TabbedMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         String tabTitles[] = new String[] { "Avisos", "Avisos Fixos", "Parcerias", "Sobre", };
@@ -202,8 +206,5 @@ public class TabbedMainActivity extends AppCompatActivity {
             }
             return null;
         }
-
-
-
     }
 }
