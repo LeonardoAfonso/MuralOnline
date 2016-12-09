@@ -76,15 +76,17 @@ public class AtualizarAvisosService extends IntentService {
                         JSONObject json;
                         try {
                             int length = response.length();
-                            json = response.getJSONObject(length-1);
-                            int lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
-                            int lastId_novo = json.getInt("avisos_id");
-                            if((lastId_novo-lastId_antigo) == 0){
-                                Log.i("Script","Atualizado");
-                            }else{
-                                Intent it = new Intent("NOVOS_AVISOS");
-                                it.putExtra("num_avisos",lastId_novo-lastId_antigo);
-                                sendBroadcast(it);
+                            if(length>0){
+                                json = response.getJSONObject(length-1);
+                                int lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
+                                int lastId_novo = json.getInt("avisos_id");
+                                if((lastId_novo-lastId_antigo) == 0){
+                                    Log.i("Script","Atualizado");
+                                }else{
+                                    Intent it = new Intent("NOVOS_AVISOS");
+                                    it.putExtra("num_avisos",lastId_novo-lastId_antigo);
+                                    sendBroadcast(it);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
