@@ -33,7 +33,9 @@ public class BD {
         valores.put("evento", aviso.getEvento());
         valores.put("local", aviso.getLocal());
         valores.put("data", aviso.getData());
+        valores.put("datafinal", aviso.getDatafinal());
         valores.put("hora", aviso.getHora());
+        valores.put("horafinal", aviso.getHorafinal());
         valores.put("observacao", aviso.getObservacao());
         valores.put("contato", aviso.getContato());
 
@@ -41,18 +43,18 @@ public class BD {
     }
 
 
-    public void atualizar(Aviso aviso){
+    /*public void atualizar(Aviso aviso){
         ContentValues valores = new ContentValues();
         valores.put("titulo", aviso.getTitulo());
         valores.put("evento", aviso.getEvento());
 
         bd.update("aviso", valores, "_id = ?", new String[]{""+aviso.getId()});
-    }
+    }*/
 
 
-    public void deletar(Aviso aviso){
+    /*public void deletar(Aviso aviso){
         bd.delete("aviso", "_id ="+aviso.getId(), null);
-    }
+    }*/
 
     public void esvaziarBanco(){
         bd.delete("aviso",null,null);
@@ -60,7 +62,7 @@ public class BD {
 
     public List<Aviso> buscar(){
         List<Aviso> list = new ArrayList<Aviso>();
-        String[] colunas = new String[]{"_id", "imagem", "titulo", "evento", "local", "data", "hora", "observacao", "contato"};
+        String[] colunas = new String[]{"_id", "imagem", "titulo", "evento", "local", "data", "datafinal", "hora", "horafinal", "observacao", "contato"};
 
         Cursor cursor = bd.query("aviso", colunas, null, null, null, null, "date(data) DESC");
 
@@ -79,14 +81,17 @@ public class BD {
                 SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
                 try{
                     String dt = myFormat.format(fromUser.parse(cursor.getString(5)));
+                    String dtfinal = myFormat.format(fromUser.parse(cursor.getString(6)));
                     a.setData(dt);
+                    a.setDatafinal(dtfinal);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
 
-                a.setHora(cursor.getString(6));
-                a.setObservacao(cursor.getString(7));
-                a.setContato(cursor.getString(8));
+                a.setHora(cursor.getString(7));
+                a.setHorafinal(cursor.getString(8));
+                a.setObservacao(cursor.getString(9));
+                a.setContato(cursor.getString(10));
                 list.add(a);
 
             }while(cursor.moveToNext());

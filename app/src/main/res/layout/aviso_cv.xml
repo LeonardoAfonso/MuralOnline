@@ -64,11 +64,30 @@ android:id="@+id/cv_aviso">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hora"
-        android:id="@+id/hora"
+        android:text="datafinal"
+        android:id="@+id/datafinal"
         android:layout_toRightOf="@+id/data"
         android:layout_below="@+id/local"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hora"
+        android:id="@+id/hora"
+        android:layout_toRightOf="@+id/foto"
+        android:layout_below="@+id/data"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="horafinal"
+        android:id="@+id/horafinal"
+        android:layout_toRightOf="@+id/hora"
+        android:layout_below="@+id/data"
+        android:layout_marginLeft="20dp"
         />
 
     <TextView
@@ -85,7 +104,7 @@ android:id="@+id/cv_aviso">
         android:layout_height="wrap_content"
         android:text="(91) 9888-8888"
         android:id="@+id/contato"
-        android:layout_below="@+id/data"
+        android:layout_below="@+id/hora"
         android:layout_toRightOf="@+id/foto"
         />
 </RelativeLayout>
