@@ -14,6 +14,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import ggbtech.muralonline.Classes.Aviso;
 
@@ -38,7 +39,6 @@ public class BD {
         valores.put("horafinal", aviso.getHorafinal());
         valores.put("observacao", aviso.getObservacao());
         valores.put("contato", aviso.getContato());
-
         bd.insert("aviso", null, valores);
     }
 
@@ -81,13 +81,19 @@ public class BD {
                 SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
                 try{
                     String dt = myFormat.format(fromUser.parse(cursor.getString(5)));
-                    String dtfinal = myFormat.format(fromUser.parse(cursor.getString(6)));
                     a.setData(dt);
-                    a.setDatafinal(dtfinal);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
 
+                if(cursor.getString(6) != null && !cursor.getString(6).equals("null") && !cursor.getString(6).isEmpty()){
+                    try{
+                        String dtfinal = myFormat.format(fromUser.parse(cursor.getString(6)));
+                        a.setDatafinal(dtfinal);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 a.setHora(cursor.getString(7));
                 a.setHorafinal(cursor.getString(8));
                 a.setObservacao(cursor.getString(9));

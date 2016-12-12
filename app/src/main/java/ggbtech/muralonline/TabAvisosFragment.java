@@ -191,7 +191,9 @@ public class TabAvisosFragment extends Fragment{
                                     aviso.setEvento(json.getString("evento"));
                                     aviso.setLocal(json.getString("local"));
                                     aviso.setData(json.getString("data"));
+                                    aviso.setDatafinal(json.getString("datafinal"));
                                     aviso.setHora(json.getString("hora"));
+                                    aviso.setHorafinal(json.getString("horafinal"));
                                     aviso.setObservacao(json.getString("observacao"));
                                     aviso.setContato(json.getString("contato"));
                                     bd2.inserir(aviso);

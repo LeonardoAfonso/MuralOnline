@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BDCore extends SQLiteOpenHelper {
     private static final String NOME_BD = "teste";
-    private static final int VERSAO_BD = 10;
+    private static final int VERSAO_BD = 12;
 
     private static BDCore mInstance = null;
 
@@ -40,8 +40,8 @@ public class BDCore extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase bd) {
-        bd.execSQL("create table aviso(_id integer primary key autoincrement, imagem int not null ,titulo text not null, evento text not null, local text not null, data text not null, datafinal text not null, hora text not null" +
-                ", horafinal text not null, observacao text not null, contato text not null);");
+        bd.execSQL("create table aviso(_id integer primary key autoincrement, imagem int not null ,titulo text not null, evento text not null, local text not null, data text not null, datafinal text null, hora text" +
+                ", horafinal text , observacao text not null, contato text not null);");
     }
 
     @Override

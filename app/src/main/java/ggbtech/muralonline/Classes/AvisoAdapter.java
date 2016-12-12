@@ -51,7 +51,6 @@ public class AvisoAdapter extends BaseAdapter{
 
     @Override
     public CardView getView(int position, View arg1, ViewGroup arg2) {
-        final int auxPosition = position;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -101,16 +100,29 @@ public class AvisoAdapter extends BaseAdapter{
         TextView evento = (TextView) layout.findViewById(R.id.evento);
         evento.setText(list.get(position).getEvento());
         TextView local = (TextView)  layout.findViewById(R.id.local);
-        local.setText(list.get(position).getLocal());
+        local.setText("Local: "+list.get(position).getLocal());
         TextView data = (TextView) layout.findViewById(R.id.data);
         data.setText(list.get(position).getData());
         TextView hora = (TextView) layout.findViewById(R.id.hora);
-        hora.setText("às "+ list.get(position).getHora());
+        hora.setText(list.get(position).getHora());
         TextView observacao = (TextView) layout.findViewById(R.id.obs);
         observacao.setText(list.get(position).getObservacao());
         TextView contato = (TextView) layout.findViewById(R.id.contato);
         contato.setText(list.get(position).getContato());
 
+        TextView datafinal = (TextView)layout.findViewById(R.id.datafinal);
+        if(list.get(position).getDatafinal() != null && !list.get(position).getDatafinal().equals("null") && !list.get(position).getDatafinal().isEmpty()){
+            datafinal.setText("até "+list.get(position).getDatafinal());
+        }else{
+            datafinal.setVisibility(View.GONE);
+        }
+
+        TextView horafinal = (TextView)layout.findViewById(R.id.horafinal);
+        if(list.get(position).getHorafinal() != null  && !list.get(position).getHorafinal().equals("null") && !list.get(position).getHorafinal().isEmpty()){
+            horafinal.setText("até às "+list.get(position).getHorafinal());
+        }else{
+            horafinal.setVisibility(View.GONE);
+        }
         return layout;
     }
 
