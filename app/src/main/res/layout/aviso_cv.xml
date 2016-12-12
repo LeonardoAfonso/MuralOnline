@@ -68,7 +68,7 @@ android:id="@+id/cv_aviso">
         android:id="@+id/datafinal"
         android:layout_toRightOf="@+id/data"
         android:layout_below="@+id/local"
-        android:layout_marginLeft="20dp"
+
         />
 
     <TextView
@@ -87,7 +87,7 @@ android:id="@+id/cv_aviso">
         android:id="@+id/horafinal"
         android:layout_toRightOf="@+id/hora"
         android:layout_below="@+id/data"
-        android:layout_marginLeft="20dp"
+
         />
 
     <TextView

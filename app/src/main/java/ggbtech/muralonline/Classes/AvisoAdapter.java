@@ -112,14 +112,14 @@ public class AvisoAdapter extends BaseAdapter{
 
         TextView datafinal = (TextView)layout.findViewById(R.id.datafinal);
         if(list.get(position).getDatafinal() != null && !list.get(position).getDatafinal().equals("null") && !list.get(position).getDatafinal().isEmpty()){
-            datafinal.setText("até "+list.get(position).getDatafinal());
+            datafinal.setText(" até "+list.get(position).getDatafinal());
         }else{
             datafinal.setVisibility(View.GONE);
         }
 
         TextView horafinal = (TextView)layout.findViewById(R.id.horafinal);
         if(list.get(position).getHorafinal() != null  && !list.get(position).getHorafinal().equals("null") && !list.get(position).getHorafinal().isEmpty()){
-            horafinal.setText("até às "+list.get(position).getHorafinal());
+            horafinal.setText(" até às "+list.get(position).getHorafinal());
         }else{
             horafinal.setVisibility(View.GONE);
         }
