@@ -47,21 +47,11 @@ public class CheckVersionActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.i("version response",response);
-                        if(verCode < Integer.parseInt(response)){
+                        if(verCode == 0){
                             new AlertDialog.Builder(ctx)
-                                    .setTitle("Atualizar Aplicativo")
-                                    .setMessage("Sua versão está desatualizada, deseja atualizar aplicativo para nova versão")
-                                    .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
-                                            try {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                            } catch (android.content.ActivityNotFoundException anfe) {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                                            }
-                                        }
-                                    })
-                                    .setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+                                    .setTitle("Manutenção")
+                                    .setMessage("Estamos realizando a manutenção de nossos servidores, por favor volte após algumas horas!")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             finish();
                                             System.exit(0);
@@ -69,10 +59,34 @@ public class CheckVersionActivity extends AppCompatActivity {
                                     })
                                     .setIcon(android.R.drawable.ic_dialog_info)
                                     .show();
-
                         }else{
-                            Intent it = new Intent(ctx,TabbedMainActivity.class);
-                            startActivity(it);
+                            if(verCode < Integer.parseInt(response)){
+                                new AlertDialog.Builder(ctx)
+                                        .setTitle("Atualizar Aplicativo")
+                                        .setMessage("Sua versão está desatualizada, deseja atualizar aplicativo para nova versão")
+                                        .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                                                try {
+                                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                                } catch (android.content.ActivityNotFoundException anfe) {
+                                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                                }
+                                            }
+                                        })
+                                        .setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                                System.exit(0);
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_info)
+                                        .show();
+
+                            }else{
+                                Intent it = new Intent(ctx,TabbedMainActivity.class);
+                                startActivity(it);
+                            }
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -81,7 +95,7 @@ public class CheckVersionActivity extends AppCompatActivity {
                 Log.i("version response","erro");
                 new AlertDialog.Builder(ctx)
                         .setTitle("Erro Verificando Aplicativo")
-                        .setMessage("Houve um erro verificando o aplicativo, pressione OK")
+                        .setMessage("Houve um erro verificando o aplicativo, pressione OK e tente novamente mais tarde")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();

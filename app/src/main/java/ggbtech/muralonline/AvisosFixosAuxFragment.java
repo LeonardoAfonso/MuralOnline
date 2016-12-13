@@ -53,6 +53,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a.setImagem(51);
         avisosFixos.add(a);
 
+
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
         int adapterCount = avisoAdapter.getCount();
@@ -79,6 +80,19 @@ public class AvisosFixosAuxFragment extends Fragment {
         a.setEvento("19h");
         a.setImagem(51);
         avisosFixos.add(a);
+
+        Aviso a2 = new Aviso();
+        a2.setTitulo("Terço dos Homens");
+        a2.setEvento("20h");
+        a2.setImagem(54);
+        avisosFixos.add(a2);
+
+        Aviso a3 = new Aviso();
+        a3.setTitulo("Pastoral Social");
+        a3.setEvento("8:30h até 12h / 14:30h até 18h");
+        a3.setImagem(10);
+        avisosFixos.add(a3);
+
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
@@ -114,6 +128,12 @@ public class AvisosFixosAuxFragment extends Fragment {
         a2.setImagem(53);
         avisosFixos.add(a2);
 
+        Aviso a3 = new Aviso();
+        a3.setTitulo("Pastoral Social");
+        a3.setEvento("8:30h até 12h / 14:30h até 18h");
+        a3.setImagem(10);
+        avisosFixos.add(a3);
+
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
         int adapterCount = avisoAdapter.getCount();
@@ -135,6 +155,12 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setImagem(50);
         a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
+
+        Aviso a3 = new Aviso();
+        a3.setTitulo("Pastoral Social");
+        a3.setEvento("8:30h até 12h / 14:30h até 18h");
+        a3.setImagem(10);
+        avisosFixos.add(a3);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
@@ -170,6 +196,12 @@ public class AvisosFixosAuxFragment extends Fragment {
         a2.setImagem(52);
         avisosFixos.add(a2);
 
+        Aviso a3 = new Aviso();
+        a3.setTitulo("Pastoral Social");
+        a3.setEvento("8:30h até 12h / 14:30h até 18h");
+        a3.setImagem(10);
+        avisosFixos.add(a3);
+
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 
         int adapterCount = avisoAdapter.getCount();
@@ -197,6 +229,12 @@ public class AvisosFixosAuxFragment extends Fragment {
         a.setEvento("19h");
         a.setImagem(51);
         avisosFixos.add(a);
+
+        Aviso a3 = new Aviso();
+        a3.setTitulo("Pastoral Social");
+        a3.setEvento("8:30h até 12h / 14:30h até 18h");
+        a3.setImagem(10);
+        avisosFixos.add(a3);
 
         final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
 

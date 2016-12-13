@@ -118,7 +118,7 @@ public class TabAvisosFragment extends Fragment{
             editor.commit();
         }
 
-        url = sharedpreferences.getString("url",null)+"consultaAvisosTeste.php";
+        url = sharedpreferences.getString("url",null)+"consultaAvisos.php";
 
         if(isConnected()){
             callByJsonArrayRequest(null);

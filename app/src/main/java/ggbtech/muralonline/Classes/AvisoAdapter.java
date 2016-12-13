@@ -91,6 +91,7 @@ public class AvisoAdapter extends BaseAdapter{
             case 51:imagem.setImageResource(R.drawable.icon_missa);break;
             case 52:imagem.setImageResource(R.drawable.icon_adoracao);break;
             case 53:imagem.setImageResource(R.drawable.icon_nossa_senhora);break;
+            case 54:imagem.setImageResource(R.drawable.logo_terco_homens);break;
 
             default:imagem.setImageResource(R.drawable.icon_informe);break;
         }
@@ -100,6 +101,11 @@ public class AvisoAdapter extends BaseAdapter{
         TextView evento = (TextView) layout.findViewById(R.id.evento);
         evento.setText(list.get(position).getEvento());
         TextView local = (TextView)  layout.findViewById(R.id.local);
+        if(list.get(position).getLocal() != null && !list.get(position).getLocal().equals("null") && !list.get(position).getLocal().isEmpty()){
+            local.setText("Local: "+list.get(position).getLocal());
+        }else{
+            local.setVisibility(View.GONE);
+        }
         local.setText("Local: "+list.get(position).getLocal());
         TextView data = (TextView) layout.findViewById(R.id.data);
         data.setText(list.get(position).getData());

@@ -56,7 +56,7 @@ public class AtualizarAvisosService extends IntentService {
         params = new HashMap<String, String>();
         params.put("last_id","0");//sharedpreferences.getString("last_id",null));
 
-        url= sharedpreferences.getString("url",null)+"consultaAvisosTeste.php";
+        url= sharedpreferences.getString("url",null)+"consultaAvisos.php";
         //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
 
