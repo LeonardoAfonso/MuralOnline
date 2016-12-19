@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -38,7 +40,22 @@ public class CheckVersionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         verCode = pInfo.versionCode;
-        checkVersion(this);
+        if(isConnected()){
+            checkVersion(this);
+        }else{
+            new AlertDialog.Builder(this)
+                    .setTitle("Sem Conexão à Internet")
+                    .setMessage("Parece que você não possui conexão a Internet. Não foi possivel abrir o aplicativo")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                            System.exit(0);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
     }
 
     public void checkVersion(final Context ctx){
@@ -108,9 +125,13 @@ public class CheckVersionActivity extends AppCompatActivity {
             }
         });
         MySingleton.getInstance(this).addToRequestQueue(str);
+    }
 
-
-
+    public Boolean isConnected(){
+        ConnectivityManager cm =(ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return connected;
     }
 
 }
