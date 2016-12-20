@@ -72,7 +72,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("7:30h até 12h / 13:30h até 18h");
         a1.setImagem(50);
-        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         Aviso a = new Aviso();
@@ -113,7 +113,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("7:30h até 12h / 13:30h até 18h");
         a1.setImagem(50);
-        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         Aviso a = new Aviso();
@@ -153,7 +153,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("7:30h até 12h / 13:30h até 18h");
         a1.setImagem(50);
-        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         Aviso a3 = new Aviso();
@@ -181,7 +181,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("7:30h até 12h / 13:30h até 18h");
         a1.setImagem(50);
-        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         Aviso a = new Aviso();
@@ -221,7 +221,7 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("7:30h até 12h / 13:30h até 18h");
         a1.setImagem(50);
-        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         Aviso a = new Aviso();
@@ -255,13 +255,13 @@ public class AvisosFixosAuxFragment extends Fragment {
         a1.setTitulo("Secretaria");
         a1.setEvento("7:30h até 11:30h");
         a1.setImagem(50);
-        a1.setLocal("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
+        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
         avisosFixos.add(a1);
 
         /*Aviso a2 = new Aviso();
         a2.setTitulo("Pároco Informa");
         a2.setEvento("Todo o 1º sábado de mês, reunião com todos os coordenadores de comunidades");
-        a2.setLocal("15h");
+        a2.setObservacao("15h");
         a2.setImagem(50);
         avisosFixos.add(a2);*/
 

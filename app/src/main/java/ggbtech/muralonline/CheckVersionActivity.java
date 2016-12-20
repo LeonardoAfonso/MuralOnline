@@ -45,7 +45,7 @@ public class CheckVersionActivity extends AppCompatActivity {
         }else{
             new AlertDialog.Builder(this)
                     .setTitle("Sem Conexão à Internet")
-                    .setMessage("Parece que você não possui conexão a Internet. Não foi possivel abrir o aplicativo")
+                    .setMessage("Ops! Parece que você não possui nenhuma conexão a Internet. Fique conectado à Internet para se manter informado sobre os avisos da Paróquia Mão do Perpátuo Socorro.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -67,7 +67,7 @@ public class CheckVersionActivity extends AppCompatActivity {
                         if(verCode == 0){
                             new AlertDialog.Builder(ctx)
                                     .setTitle("Manutenção")
-                                    .setMessage("Estamos realizando a manutenção de nossos servidores, por favor volte após algumas horas!")
+                                    .setMessage("Opa! Parece que estamos realizando uma manutenção em nossos servidores, por favor volte após algumas horas!")
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             finish();
@@ -79,8 +79,8 @@ public class CheckVersionActivity extends AppCompatActivity {
                         }else{
                             if(verCode < Integer.parseInt(response)){
                                 new AlertDialog.Builder(ctx)
-                                        .setTitle("Atualizar Aplicativo")
-                                        .setMessage("Sua versão está desatualizada, deseja atualizar aplicativo para nova versão")
+                                        .setTitle("Atualização disponivel")
+                                        .setMessage("Há uma nova versão do aplicativo na sua loja, atualize agora e não deixe de saber os eventos e reunião da Paróquia Mãe do Perpétuo Socorro")
                                         .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
@@ -112,7 +112,7 @@ public class CheckVersionActivity extends AppCompatActivity {
                 Log.i("version response","erro");
                 new AlertDialog.Builder(ctx)
                         .setTitle("Erro Verificando Aplicativo")
-                        .setMessage("Houve um erro verificando o aplicativo, pressione OK e tente novamente mais tarde")
+                        .setMessage("Ops! Tivemos um probleminha técnico! Verifique novamente sua conexão de rede e tente novamente. Caso o problema persista, tente mais tarde.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();

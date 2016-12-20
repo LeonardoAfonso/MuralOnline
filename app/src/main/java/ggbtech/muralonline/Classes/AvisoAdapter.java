@@ -97,24 +97,54 @@ public class AvisoAdapter extends BaseAdapter{
         }
 
         TextView titulo = (TextView) layout.findViewById(R.id.titulo);
-        titulo.setText(list.get(position).getTitulo());
+        if(list.get(position).getTitulo() != null && !list.get(position).getTitulo().equals("null") && !list.get(position).getTitulo().isEmpty()){
+            titulo.setText(list.get(position).getTitulo());
+        }else{
+            titulo.setVisibility(View.GONE);
+        }
+
+
         TextView evento = (TextView) layout.findViewById(R.id.evento);
-        evento.setText(list.get(position).getEvento());
+        if(list.get(position).getEvento() != null && !list.get(position).getEvento().equals("null") && !list.get(position).getEvento().isEmpty()){
+            evento.setText(list.get(position).getEvento());
+        }else{
+            evento.setVisibility(View.GONE);
+        }
+
         TextView local = (TextView)  layout.findViewById(R.id.local);
         if(list.get(position).getLocal() != null && !list.get(position).getLocal().equals("null") && !list.get(position).getLocal().isEmpty()){
             local.setText("Local: "+list.get(position).getLocal());
         }else{
             local.setVisibility(View.GONE);
         }
-        local.setText("Local: "+list.get(position).getLocal());
+
         TextView data = (TextView) layout.findViewById(R.id.data);
-        data.setText(list.get(position).getData());
+        if(list.get(position).getData() != null && !list.get(position).getData().equals("null") && !list.get(position).getData().isEmpty()){
+            data.setText(list.get(position).getData());
+        }else{
+            data.setVisibility(View.GONE);
+        }
+
         TextView hora = (TextView) layout.findViewById(R.id.hora);
-        hora.setText(list.get(position).getHora());
+        if(list.get(position).getHora() != null  && !list.get(position).getHora().equals("null") && !list.get(position).getHora().isEmpty()){
+            hora.setText(list.get(position).getHora());
+        }else{
+            hora.setVisibility(View.GONE);
+        }
+
         TextView observacao = (TextView) layout.findViewById(R.id.obs);
-        observacao.setText(list.get(position).getObservacao());
+        if(list.get(position).getObservacao() != null && !list.get(position).getObservacao().equals("null") && !list.get(position).getObservacao().isEmpty()){
+            observacao.setText(list.get(position).getObservacao());
+        }else{
+            observacao.setVisibility(View.GONE);
+        }
+
         TextView contato = (TextView) layout.findViewById(R.id.contato);
-        contato.setText(list.get(position).getContato());
+        if(list.get(position).getContato() !=null && !list.get(position).getContato().equals("null") && !list.get(position).getContato().isEmpty()){
+            contato.setText(list.get(position).getContato());
+        }else{
+            contato.setVisibility(View.GONE);
+        }
 
         TextView datafinal = (TextView)layout.findViewById(R.id.datafinal);
         if(list.get(position).getDatafinal() != null && !list.get(position).getDatafinal().equals("null") && !list.get(position).getDatafinal().isEmpty()){

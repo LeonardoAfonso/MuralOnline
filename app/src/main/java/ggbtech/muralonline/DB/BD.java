@@ -79,6 +79,8 @@ public class BD {
                 a.setLocal(cursor.getString(4));
                 SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
                 SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+                SimpleDateFormat formatto = new SimpleDateFormat("HH:mm");
                 try{
                     String dt = myFormat.format(fromUser.parse(cursor.getString(5)));
                     a.setData(dt);
@@ -94,8 +96,22 @@ public class BD {
                         e.printStackTrace();
                     }
                 }
-                a.setHora(cursor.getString(7));
-                a.setHorafinal(cursor.getString(8));
+
+                try{
+                    String time = formatto.format(timeformat.parse(cursor.getString(7)));
+                    a.setHora(time);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if(cursor.getString(8) != null && !cursor.getString(8).equals("null") && !cursor.getString(8).isEmpty()){
+                    try{
+                        String timefinal = formatto.format(timeformat.parse(cursor.getString(8)));
+                        a.setHorafinal(timefinal);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 a.setObservacao(cursor.getString(9));
                 a.setContato(cursor.getString(10));
                 list.add(a);
