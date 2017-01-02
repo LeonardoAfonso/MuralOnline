@@ -27,7 +27,6 @@ public class TabAvisosFixosFragment extends Fragment {
         TabAvisosFixosFragment f = new TabAvisosFixosFragment();
         return f;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class TabAvisosFixosFragment extends Fragment {
                 tv.setTextColor(Color.WHITE);
             }
         });
-
 
         Bundle arg1 = new Bundle();
         arg1.putInt("Arg for Frag1", 1);

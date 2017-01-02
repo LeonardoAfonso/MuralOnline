@@ -1,20 +1,48 @@
 package ggbtech.muralonline;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import ggbtech.muralonline.Classes.Aviso;
 import ggbtech.muralonline.Classes.AvisoAdapter;
+import ggbtech.muralonline.Classes.MySingleton;
+import ggbtech.muralonline.DB.BD;
+import ggbtech.muralonline.JSONClasses.CustomJSONArrayRequest;
 
 
 public class AvisosFixosAuxFragment extends Fragment {
-    LinearLayout mLinearLayout;
+    private LinearLayout mLinearLayout;
+    private HashMap<String,String> params;
+    private String url;
+    private Context myContext;
+    private View v;
+    private ProgressDialog progressDialog;
 
     public AvisosFixosAuxFragment() {
         // Required empty public constructor
@@ -29,259 +57,94 @@ public class AvisosFixosAuxFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tab_horarios_semanais, container, false);
+        myContext = getContext();
+        url ="http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosFixos.php";
+        v = inflater.inflate(R.layout.fragment_tab_horarios_semanais, container, false);
         String fragTag = this.getTag();
-
         switch(fragTag){
-            case "TabDom": tabDom(v);break;
-            case "TabSeg":tabSeg(v);break;
-            case "TabTer":tabTer(v);break;
-            case "TabQua": tabQua(v);break;
-            case "TabQui":tabQui(v);break;
-            case "TabSex":tabSex(v);break;
-            case "TabSab":tabSab(v);break;
+            case "TabDom": getAvisosFixos(0);break;
+            case "TabSeg":getAvisosFixos(1);break;
+            case "TabTer":getAvisosFixos(2);break;
+            case "TabQua": getAvisosFixos(3);break;
+            case "TabQui":getAvisosFixos(4);break;
+            case "TabSex":getAvisosFixos(5);break;
+            case "TabSab":getAvisosFixos(6);break;
         }
         return v;
     }
 
-    public void tabDom(View v){
-        //View card = inflater.inflate(R.layout.aviso_cv,container,false);
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a = new Aviso();
-        a.setTitulo("Missas");
-        a.setEvento("07h - 8:30h - 17:30h - 19h");
-        a.setImagem(51);
-        avisosFixos.add(a);
+    public void getAvisosFixos(int codigo_dia){
+        progressDialog = ProgressDialog.show(myContext,"Atualizando","Aguarde enquanto atualizamos os avisos", false, true);
+        //dialog.setIcon(R.drawable.ic_launcher);
+        progressDialog.setCancelable(false);
+        params = new HashMap<>();
+        params.put("codigo_dia", String.valueOf(codigo_dia));
+        Log.i("Script codigo_dia", String.valueOf(codigo_dia));
+        CustomJSONArrayRequest request = new CustomJSONArrayRequest(Request.Method.POST,
+                url,
+                params,
+                new Response.Listener<JSONArray>(){
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("Script", "SUCCESS: "+response);
+                        JSONObject json = null;
+                        if (response.length()>0){
+                            try {
+                                mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
+                                mLinearLayout.removeAllViews();
+                                ArrayList<Aviso> avisosFixos = new ArrayList<>();
+                                for (int i=0;i<response.length();i++){
+                                    Aviso aviso = new Aviso();
+                                    json = response.getJSONObject(i);
+                                    Log.i("ID :", String.valueOf(json.getInt("id")));
+                                    aviso.setId(json.getInt("id"));
+                                    aviso.setImagem(json.getInt("grupo_id"));
+                                    aviso.setTitulo(json.getString("titulo"));
+                                    aviso.setEvento(json.getString("evento"));
+                                    aviso.setLocal(json.getString("local"));
+                                    aviso.setData(json.getString("data"));
+                                    aviso.setDatafinal(json.getString("datafinal"));
+                                    aviso.setHora(json.getString("hora"));
+                                    aviso.setHorafinal(json.getString("horafinal"));
+                                    aviso.setObservacao(json.getString("observacao"));
+                                    aviso.setContato(json.getString("contato"));
+                                    avisosFixos.add(aviso);
+                                }
+                                final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
+                                int adapterCount = avisoAdapter.getCount();
+                                for (int j = 0; j <adapterCount ; j++) {
+                                    View item = avisoAdapter.getView(j, null, null);
+                                    item.findViewById(R.id.hora).setVisibility(View.GONE);
+                                    mLinearLayout.addView(item);
+                                }
+                                progressDialog.dismiss();
 
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                progressDialog.dismiss();
 
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        if (error instanceof AuthFailureError) {
+                            Toast.makeText(myContext,"AuthFailureError" ,Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(myContext,"ServerError" ,Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(myContext,"NetworkError" ,Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(myContext,"ParseError" ,Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-    }
-
-    public void tabSeg(View v){
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("7:30h até 12h / 13:30h até 18h");
-        a1.setImagem(50);
-        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
-        avisosFixos.add(a1);
-
-        Aviso a = new Aviso();
-        a.setTitulo("Missa");
-        a.setEvento("19h");
-        a.setImagem(51);
-        avisosFixos.add(a);
-
-        Aviso a2 = new Aviso();
-        a2.setTitulo("Terço dos Homens");
-        a2.setEvento("20h");
-        a2.setImagem(54);
-        avisosFixos.add(a2);
-
-        Aviso a3 = new Aviso();
-        a3.setTitulo("Pastoral Social");
-        a3.setEvento("8:30h até 12h / 14:30h até 18h");
-        a3.setImagem(10);
-        avisosFixos.add(a3);
-
-
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
-
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-
-    }
-
-    public void tabTer(View v){
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("7:30h até 12h / 13:30h até 18h");
-        a1.setImagem(50);
-        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
-        avisosFixos.add(a1);
-
-        Aviso a = new Aviso();
-        a.setTitulo("Missas");
-        a.setEvento("05:30h - 6:30h - 17:30h");
-        a.setImagem(51);
-        avisosFixos.add(a);
-
-        Aviso a2 = new Aviso();
-        a2.setTitulo("Novenas");
-        a2.setEvento("06h (25 minutos) - 07h - 08h - 09h - 10h - 11h - 12h - 13h - 14h - 15h - 16h - 18h - 19h - 20h - 21h");
-        a2.setImagem(53);
-        avisosFixos.add(a2);
-
-        Aviso a3 = new Aviso();
-        a3.setTitulo("Pastoral Social");
-        a3.setEvento("8:30h até 12h / 14:30h até 18h");
-        a3.setImagem(10);
-        avisosFixos.add(a3);
-
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
-
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-
-    }
-
-    public void tabQua(View v){
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("7:30h até 12h / 13:30h até 18h");
-        a1.setImagem(50);
-        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
-        avisosFixos.add(a1);
-
-        Aviso a3 = new Aviso();
-        a3.setTitulo("Pastoral Social");
-        a3.setEvento("8:30h até 12h / 14:30h até 18h");
-        a3.setImagem(10);
-        avisosFixos.add(a3);
-
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
-
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-
-    }
-
-    public void tabQui(View v){
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("7:30h até 12h / 13:30h até 18h");
-        a1.setImagem(50);
-        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
-        avisosFixos.add(a1);
-
-        Aviso a = new Aviso();
-        a.setTitulo("Missa");
-        a.setEvento("19h");
-        a.setImagem(51);
-        avisosFixos.add(a);
-
-        Aviso a2 = new Aviso();
-        a2.setTitulo("Adoração");
-        a2.setEvento("20h");
-        a2.setImagem(52);
-        avisosFixos.add(a2);
-
-        Aviso a3 = new Aviso();
-        a3.setTitulo("Pastoral Social");
-        a3.setEvento("8:30h até 12h / 14:30h até 18h");
-        a3.setImagem(10);
-        avisosFixos.add(a3);
-
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
-
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-
-    }
-
-    public void tabSex(View v){
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("7:30h até 12h / 13:30h até 18h");
-        a1.setImagem(50);
-        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
-        avisosFixos.add(a1);
-
-        Aviso a = new Aviso();
-        a.setTitulo("Missa");
-        a.setEvento("19h");
-        a.setImagem(51);
-        avisosFixos.add(a);
-
-        Aviso a3 = new Aviso();
-        a3.setTitulo("Pastoral Social");
-        a3.setEvento("8:30h até 12h / 14:30h até 18h");
-        a3.setImagem(10);
-        avisosFixos.add(a3);
-
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
-
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-
-    }
-
-    public void tabSab(View v){
-        ArrayList<Aviso> avisosFixos = new ArrayList<>();
-        Aviso a1 = new Aviso();
-        a1.setTitulo("Secretaria");
-        a1.setEvento("7:30h até 11:30h");
-        a1.setImagem(50);
-        a1.setObservacao("(91)  3233-1797 / (91) 98874-3591 (WhatsApp)");
-        avisosFixos.add(a1);
-
-        /*Aviso a2 = new Aviso();
-        a2.setTitulo("Pároco Informa");
-        a2.setEvento("Todo o 1º sábado de mês, reunião com todos os coordenadores de comunidades");
-        a2.setObservacao("15h");
-        a2.setImagem(50);
-        avisosFixos.add(a2);*/
-
-        Aviso a = new Aviso();
-        a.setTitulo("Missa");
-        a.setEvento("19h");
-        a.setImagem(51);
-        avisosFixos.add(a);
-
-        final AvisoAdapter avisoAdapter = new AvisoAdapter(getContext(),avisosFixos);
-
-        int adapterCount = avisoAdapter.getCount();
-        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
-
-        for (int j = 0; j <adapterCount ; j++) {
-            View item = avisoAdapter.getView(j, null, null);
-            item.findViewById(R.id.hora).setVisibility(View.GONE);
-            mLinearLayout.addView(item);
-        }
-
+        request.setTag("tag");
+        MySingleton.getInstance(myContext).addToRequestQueue(request);
     }
 
 }
