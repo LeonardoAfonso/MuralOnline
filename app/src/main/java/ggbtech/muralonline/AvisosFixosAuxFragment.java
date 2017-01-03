@@ -57,9 +57,9 @@ public class AvisosFixosAuxFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_tab_horarios_semanais,container,false);
         myContext = getContext();
         url ="http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosFixos.php";
-        v = inflater.inflate(R.layout.fragment_tab_horarios_semanais, container, false);
         String fragTag = this.getTag();
         switch(fragTag){
             case "TabDom": getAvisosFixos(0);break;
