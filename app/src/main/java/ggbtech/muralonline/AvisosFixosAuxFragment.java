@@ -3,14 +3,17 @@ package ggbtech.muralonline;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -132,14 +135,33 @@ public class AvisosFixosAuxFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         if (error instanceof AuthFailureError) {
-                            Toast.makeText(myContext,"AuthFailureError" ,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(myContext,"AuthFailureError" ,Toast.LENGTH_LONG).show();
                         } else if (error instanceof ServerError) {
-                            Toast.makeText(myContext,"ServerError" ,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(myContext,"ServerError" ,Toast.LENGTH_LONG).show();
                         } else if (error instanceof NetworkError) {
-                            Toast.makeText(myContext,"NetworkError" ,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(myContext,"NetworkError" ,Toast.LENGTH_LONG).show();
                         } else if (error instanceof ParseError) {
-                            Toast.makeText(myContext,"ParseError" ,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(myContext,"ParseError" ,Toast.LENGTH_LONG).show();
                         }
+                        mLinearLayout = (LinearLayout)v.findViewById(R.id.ll2);
+                        mLinearLayout.removeAllViews();
+                        CardView cv = new CardView(myContext);
+                        TextView txt = new TextView(myContext);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        CardView.LayoutParams lpc = new CardView.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.MATCH_PARENT);
+                        txt.setText("Ops! Tivemos um probleminha técnico! Verifique novamente sua conexão de rede e tente novamente. Caso o problema persista, tente mais tarde.");
+                        txt.setTextColor(Color.RED);
+                        txt.setTextSize(15);
+                        cv.addView(txt);
+                        lp.setMargins(15, 15, 15, 15);
+                        lpc.setMargins(20,20,20,20);
+                        cv.setCardElevation(10);
+                        cv.setUseCompatPadding(true);
+                        cv.setRadius(10);
+                        cv.setLayoutParams(lp);
+                        txt.setLayoutParams(lpc);
+                        mLinearLayout.addView(cv);
+
                     }
                 });
 
