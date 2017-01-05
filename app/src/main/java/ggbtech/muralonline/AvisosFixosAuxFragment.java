@@ -150,7 +150,7 @@ public class AvisosFixosAuxFragment extends Fragment {
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                         CardView.LayoutParams lpc = new CardView.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.MATCH_PARENT);
                         txt.setText("Ops! Tivemos um probleminha técnico! Verifique novamente sua conexão de rede e tente novamente. Caso o problema persista, tente mais tarde.");
-                        txt.setTextColor(Color.RED);
+                        txt.setTextColor(Color.BLACK);
                         txt.setTextSize(15);
                         cv.addView(txt);
                         lp.setMargins(15, 15, 15, 15);
