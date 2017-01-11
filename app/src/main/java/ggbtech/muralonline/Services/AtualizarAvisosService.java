@@ -16,6 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import ggbtech.muralonline.Classes.MySingleton;
@@ -29,37 +32,18 @@ public class AtualizarAvisosService extends IntentService {
     public static final String MyPREFERENCES = "MyPrefs" ;
     private SharedPreferences sharedpreferences;
 
-
     public AtualizarAvisosService() {
         super("AtualizarAvisosService");
-    }
-
-    public Boolean exists (SharedPreferences sp){
-        if (sp.contains("last_id")){
-            return false;
-        }else return true;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         sharedpreferences  = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        if (exists(sharedpreferences)){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("last_id","1");
-            editor.commit();
-            Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
-        }else{
-            Log.i("Shared Preferences","Ja existe");
-            Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));}
-
-        params = new HashMap<String, String>();
-        params.put("last_id","0");//sharedpreferences.getString("last_id",null));
-
-        url= sharedpreferences.getString("url",null)+"consultaAvisos.php";
+        params = new HashMap<>();
+        params.put("last_id","0");
+        url= sharedpreferences.getString("urlConsulta",null);
         //url = "http://192.168.0.16/ProjetoAvisos/consultaAvisos.php";
         Log.i("Service", "Servico");
-
         //rq = Volley.newRequestQueue(this);
         callJsonRequest();
         //rq.cancelAll("tag");
@@ -76,15 +60,34 @@ public class AtualizarAvisosService extends IntentService {
                         JSONObject json;
                         try {
                             int length = response.length();
-                            if(length>0){
+                            if(length > 0){
                                 json = response.getJSONObject(length-1);
-                                int lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
-                                int lastId_novo = json.getInt("avisos_id");
-                                if((lastId_novo-lastId_antigo) == 0){
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                                Date last_dateCreate_antigo = new Date();
+                                Date date;
+
+                                try {
+                                    last_dateCreate_antigo = dateFormat.parse(sharedpreferences.getString("last_createDate",null));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                int day_counter=0;
+                                for (int i=0;i< response.length();i++){
+                                    try{
+                                        date = dateFormat.parse(json.getString("datecreate"));
+                                        if (date.after(last_dateCreate_antigo)){
+                                            day_counter++;
+                                        }
+                                    }catch (ParseException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                if(day_counter >0){
                                     Log.i("Script","Atualizado");
                                 }else{
                                     Intent it = new Intent("NOVOS_AVISOS");
-                                    it.putExtra("num_avisos",lastId_novo-lastId_antigo);
+                                    it.putExtra("num_avisos",day_counter);
                                     sendBroadcast(it);
                                 }
                             }

@@ -105,35 +105,19 @@ public class TabAvisosFragment extends Fragment{
             if(sharedpreferences.getString("not",null) != "0"){
                 SharedPreferences.Editor edt = sharedpreferences.edit();
                 edt.putString("not","0");
-                Log.i("not", "setando pra 0");
+                //Log.i("not", "setando pra 0");
                 edt.commit();
             }
         }
 
-
-
-        if(!(sharedpreferences.contains("url"))){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
-            editor.commit();
-        }
-
-        url = sharedpreferences.getString("url",null)+"consultaAvisos.php";
+        url = sharedpreferences.getString("urlConsulta",null);
 
         if(isConnected()){
             callByJsonArrayRequest(null);
         }else{
             Toast.makeText(myContext,"Sem conexão à Internet",Toast.LENGTH_SHORT).show();
         }
-
         return rootView;
-    }
-
-
-    public Boolean exists (){
-        if (sharedpreferences.contains("last_id")){
-            return false;
-        }else return true;
     }
 
     public String novosAvisos(int length){
@@ -156,16 +140,6 @@ public class TabAvisosFragment extends Fragment{
     }
 
     public void callByJsonArrayRequest(View view){
-        if (exists()){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("last_id","0");
-            editor.commit();
-            Log.i("Shared Preferences","SP iniciado, Last Id:"+ sharedpreferences.getString("last_id",null));
-        }else{
-            Log.i("Shared Preferences","Ja existe");
-            Log.i("Shared Preferences"," Last Id:"+ sharedpreferences.getString("last_id",null));
-        }
-
         params = new HashMap<>();
         params.put("last_id","0" );
         Log.i("Script","last_id 0");
@@ -198,21 +172,13 @@ public class TabAvisosFragment extends Fragment{
                                     aviso.setContato(json.getString("contato"));
                                     bd2.inserir(aviso);
                                 }
-                                    Log.i("Script","atualizando Last_id :"+sharedpreferences.getString("last_id",null));
-                                    lastId_antigo = Integer.parseInt(sharedpreferences.getString("last_id",null));
-                                if (sharedpreferences.getBoolean("firstrun", true)) {
-                                    lastId_novo =response.length();
-                                    sharedpreferences.edit().putBoolean("firstrun", false).commit();
-                                }else{
-                                    lastId_novo = json.getInt("avisos_id");
-                                }
-
-                                    Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
+                                   //Log.i("Script","atualizando Last_id :"+sharedpreferences.getString("last_id",null));
+                                    //Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
                                     Snackbar.make(mNestedScrollView, novosAvisos(lastId_novo-lastId_antigo), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
-                                    editor.putString("last_id",String.valueOf(json.getInt("avisos_id")));
+                                    editor.putString("last_createDate",json.getString("datecreate"));
+                                    Log.i("Script", "date create: "+ json.getString("datecreate"));
                                     editor.commit();
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
 
@@ -220,10 +186,7 @@ public class TabAvisosFragment extends Fragment{
                             mLinearLayout.removeAllViews();
                             List<Aviso> list = bd2.buscar();
                             final AvisoAdapter avisoAdapter = new AvisoAdapter(myContext,list);
-
-
                             adapterCount = avisoAdapter.getCount();
-
                             for (int j = adapterCount-1; j >=0 ; j--) {
                                 View item = avisoAdapter.getView(j, null, null);
                                 mLinearLayout.addView(item);

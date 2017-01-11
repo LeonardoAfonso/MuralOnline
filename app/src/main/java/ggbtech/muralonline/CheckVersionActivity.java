@@ -3,20 +3,17 @@ package ggbtech.muralonline;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,12 +24,39 @@ import ggbtech.muralonline.Classes.MySingleton;
 public class CheckVersionActivity extends AppCompatActivity {
     private int verCode;
     private PackageInfo pInfo;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_version);
+
+        sharedPreferences = getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
+
+        if(sharedPreferences.getBoolean("update",true)){
+            Log.i("Script","update");
+
+            PreferenceManager.setDefaultValues(this,R.xml.pref_data_sync,true);
+            PreferenceManager.setDefaultValues(this,R.xml.pref_notification,true);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+
+            editor.putString("last_createDate","0");
+            editor.putString("urlConsulta","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosTeste.php");
+            editor.putString("urlAvisoFixos","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosFixos.php");
+            editor.putString("urlParceiros","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/parceiros/");
+            editor.putBoolean("update",false);
+            editor.commit();
+        }else{
+            Log.i("Script","updated");
+            PreferenceManager.setDefaultValues(this,R.xml.pref_data_sync,false);
+            PreferenceManager.setDefaultValues(this,R.xml.pref_notification,false);
+        }
+
         pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

@@ -68,7 +68,7 @@ public class TabParceirosFragment extends Fragment {
         MySingleton.getInstance(myContext).addToRequestQueue(stringRequest);
         */
         final View rl = inflater.inflate(R.layout.quadro_parceiro,container,false);
-        urlImagens1 = sharedpreferences.getString("url",null)+"/parceiros/anuncio0.png";
+        urlImagens1 = sharedpreferences.getString("urlParceiros",null)+"anuncio0.png";
         ImageView img = (ImageView)rl.findViewById(R.id.parceiro1);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(myContext).build();
         DisplayImageOptions option = new DisplayImageOptions.Builder()
@@ -77,11 +77,10 @@ public class TabParceirosFragment extends Fragment {
                 .showImageOnLoading(R.drawable.icon_anuncio).build();
         ImageLoader.getInstance().init(config);
         ImageLoader.getInstance().displayImage(urlImagens1,img,option);
-        urlImagens2 = sharedpreferences.getString("url",null)+"/parceiros/anuncio1.png";
+        urlImagens2 = sharedpreferences.getString("urlParceiros",null)+"anuncio1.png";
         ImageView img2 = (ImageView)rl.findViewById(R.id.parceiro2);
         ImageLoader.getInstance().displayImage(urlImagens2,img2,option);
         ll.addView(rl);
-
         return rootView;
     }
 

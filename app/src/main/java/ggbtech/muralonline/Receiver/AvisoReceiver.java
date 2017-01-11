@@ -39,7 +39,7 @@ public class AvisoReceiver extends BroadcastReceiver {
         Log.i("DefPrefs","notificacao"+valorNot);
 
         if(!(sharedpreferences.getString("not",null) == String.valueOf(num))){
-            if(valorNot) {
+            if(defSharedPreferences.getBoolean("notifications_new_message",true)) {
                 gerarNotificacao(context, new Intent(context, TabbedMainActivity.class), "Chegaram Novos Avisos", "Voce possui " + qtd(num), "Clique para visualizar");
                 editorNot.putString("not", String.valueOf(num));
                 editorNot.commit();
@@ -70,9 +70,8 @@ public class AvisoReceiver extends BroadcastReceiver {
         builder.setContentIntent(p);
         Notification n = builder.build();
         defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        valorVibrar = defSharedPreferences.getBoolean("notifications_new_message_vibrate",true);
         Log.i("DefPrefs","vibrar"+valorVibrar);
-        if(valorVibrar){
+        if(defSharedPreferences.getBoolean("notifications_new_message_vibrate",true)){
             n.vibrate = new long[]{150, 300, 150, 600};
         }
         n.flags = Notification.FLAG_AUTO_CANCEL;

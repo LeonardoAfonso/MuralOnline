@@ -17,9 +17,8 @@ public class IniciaServicoReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        valorNot = defSharedPreferences.getBoolean("notifications_new_message",true);
         Log.i("DefPrefs","notificacao"+valorNot);
-        if(valorNot){
+        if(defSharedPreferences.getBoolean("notifications_new_message",true)){
             Log.i("BR", "Inicia Servico");
             Intent service = new Intent(context,AtualizarAvisosService.class);
             context.startService(service);    

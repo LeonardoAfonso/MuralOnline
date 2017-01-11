@@ -44,6 +44,8 @@ public class AvisosFixosAuxFragment extends Fragment {
     private HashMap<String,String> params;
     private String url;
     private Context myContext;
+    private  SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
     private View v;
     private ProgressDialog progressDialog;
 
@@ -62,7 +64,8 @@ public class AvisosFixosAuxFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_tab_horarios_semanais,container,false);
         myContext = getContext();
-        url ="http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosFixos.php";
+        sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        url = sharedpreferences.getString("urlAvisoFixos",null);
         String fragTag = this.getTag();
         switch(fragTag){
             case "TabDom": getAvisosFixos(0);break;

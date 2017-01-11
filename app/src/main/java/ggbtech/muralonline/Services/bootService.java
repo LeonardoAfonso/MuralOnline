@@ -28,13 +28,13 @@ public class bootService extends IntentService {
             c.add(Calendar.SECOND, 3);
             AlarmManager alarme = (AlarmManager) getSystemService(ALARM_SERVICE);
             Log.i("DefPrefs","Sync time :"+defSharedPreferences.getString("sync_frequency","180"));
-            int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
+            int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency",null))*60000;
             alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), min, p);
             Log.i("DefPrefs","Sync time milli :"+min);
         }
         else{
             Log.i("Script", "Alarme ja ativo");
-            int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
+            int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency",null))*60000;
             Log.i("DefPrefs","Sync time milli :"+min);
         }
 

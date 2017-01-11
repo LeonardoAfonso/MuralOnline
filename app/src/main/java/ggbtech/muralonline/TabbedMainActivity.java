@@ -48,11 +48,8 @@ import ggbtech.muralonline.Classes.MySingleton;
 import ggbtech.muralonline.Settings.SettingsActivity;
 
 public class TabbedMainActivity extends AppCompatActivity {
-    private SharedPreferences sharedpreferences;
     private SharedPreferences defSharedPreferences;
-    private Boolean valorNot;
     private Context myContext;
-    public static final String MyPREFERENCES = "MyPrefs" ;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -63,32 +60,27 @@ public class TabbedMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed_main);
         myContext=getApplicationContext();
-
-
-
         defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(myContext);
-        valorNot = defSharedPreferences.getBoolean("notifications_new_message",true);
-        Log.i("DefPrefs","notificacao"+valorNot);
 
-        if(valorNot){
+        if(defSharedPreferences.getBoolean("notifications_new_message",true)){
             boolean alarmeAtivo = (PendingIntent.getBroadcast(myContext, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
 
             if(alarmeAtivo){
-                Log.i("Script", "Novo alarme");
+                //Log.i("Script", "Novo alarme");
                 Intent intent = new Intent("ALARME_DISPARADO");
                 PendingIntent p = PendingIntent.getBroadcast(myContext, 0, intent, 0);
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(System.currentTimeMillis());
                 c.add(Calendar.SECOND, 3);
                 AlarmManager alarme = (AlarmManager) myContext.getSystemService(Context.ALARM_SERVICE);
-                Log.i("DefPrefs","Sync time :"+defSharedPreferences.getString("sync_frequency","180"));
-                int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
+                //Log.i("DefPrefs","Sync time :"+defSharedPreferences.getString("sync_frequency","180"));
+                int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency",null))*60000;
                 alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), min, p);
-                Log.i("DefPrefs","Sync time milli :"+min);
+                //Log.i("DefPrefs","Sync time milli :"+min);
             }
             else{
                 Log.i("Script", "Alarme ja ativo");
-                int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency","180"))*60000;
+                int min = Integer.parseInt(defSharedPreferences.getString("sync_frequency",null))*60000;
                 Log.i("DefPrefs","Sync time milli :"+min);
             }
         }
@@ -105,13 +97,6 @@ public class TabbedMainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(0);
-        sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        if(!(sharedpreferences.contains("url"))){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("url","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/");
-            editor.commit();
-        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -200,8 +185,6 @@ public class TabbedMainActivity extends AppCompatActivity {
                     return "Avisos Fixos";
                 case 2:
                     return "Parceiros";
-                //case 3:
-                  //  return "Sobre";
             }
             return null;
         }
