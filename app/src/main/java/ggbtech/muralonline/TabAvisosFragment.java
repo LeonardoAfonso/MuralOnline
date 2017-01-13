@@ -176,8 +176,8 @@ public class TabAvisosFragment extends Fragment{
                                     //Log.i("Script", "antigo :"+lastId_antigo+" novo: "+lastId_novo);
                                     Snackbar.make(mNestedScrollView, novosAvisos(lastId_novo-lastId_antigo), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
-                                    editor.putString("last_createDate",json.getString("datecreate"));
-                                    Log.i("Script", "date create: "+ json.getString("datecreate"));
+                                    editor.putString("last_createDate",json.getString("datecreated"));
+                                    Log.i("Script", "date create: "+ json.getString("datecreated"));
                                     editor.commit();
                             } catch (JSONException e) {
                                 e.printStackTrace();

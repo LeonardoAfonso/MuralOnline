@@ -57,12 +57,10 @@ public class AtualizarAvisosService extends IntentService {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("Script", "SUCCESS service: "+response);
-                        JSONObject json;
                         try {
                             int length = response.length();
                             if(length > 0){
-                                json = response.getJSONObject(length-1);
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                                 Date last_dateCreate_antigo = new Date();
                                 Date date;
 
@@ -71,23 +69,28 @@ public class AtualizarAvisosService extends IntentService {
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                int day_counter=0;
+                                int aviso_counter = 0;
+                                JSONObject j = null;
                                 for (int i=0;i< response.length();i++){
                                     try{
-                                        date = dateFormat.parse(json.getString("datecreate"));
+                                        Log.i("Script","laco de contagem de avisos: "+ i);
+                                        j = response.getJSONObject(i);
+                                        date = dateFormat.parse(j.getString("datecreated"));
                                         if (date.after(last_dateCreate_antigo)){
-                                            day_counter++;
+                                            Log.i("Script",i + "e aviso recente");
+                                            aviso_counter++;
                                         }
                                     }catch (ParseException e){
                                         e.printStackTrace();
                                     }
                                 }
 
-                                if(day_counter >0){
+                                if(aviso_counter > 0){
                                     Log.i("Script","Atualizado");
                                 }else{
                                     Intent it = new Intent("NOVOS_AVISOS");
-                                    it.putExtra("num_avisos",day_counter);
+                                    Log.i("Script","contador de avisos : "+aviso_counter);
+                                    it.putExtra("num_avisos",aviso_counter);
                                     sendBroadcast(it);
                                 }
                             }
