@@ -59,6 +59,16 @@ public class AvisoAdapter extends BaseAdapter{
         int foto = list.get(position).getImagem();
         ImageView imagem = (ImageView) layout.findViewById(R.id.foto);
 
+        ImageView fav = (ImageView) layout.findViewById(R.id.favorite);
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         switch(foto){
             case 1:imagem.setImageResource(R.drawable.logo_pastoral_catequetica);break;
             case 2:imagem.setImageResource(R.drawable.logo_pastoral_dizimo);break;

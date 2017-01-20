@@ -51,6 +51,7 @@
 
     <string name="pref_title_sync_frequency">Frequência de Sincronização</string>
     <string-array name="pref_sync_frequency_titles">
+        <item>5 minutos</item>
         <item>15 minutos</item>
         <item>30 minutos</item>
         <item>1 hora</item>
@@ -58,6 +59,7 @@
         <item>6 horas</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">
+        <item>5</item>
         <item>15</item>
         <item>30</item>
         <item>60</item>

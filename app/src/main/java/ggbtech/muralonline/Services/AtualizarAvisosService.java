@@ -85,7 +85,7 @@ public class AtualizarAvisosService extends IntentService {
                                     }
                                 }
 
-                                if(aviso_counter > 0){
+                                if(aviso_counter == 0){
                                     Log.i("Script","Atualizado");
                                 }else{
                                     Intent it = new Intent("NOVOS_AVISOS");
