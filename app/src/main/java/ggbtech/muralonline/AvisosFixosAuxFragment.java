@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +49,8 @@ public class AvisosFixosAuxFragment extends Fragment {
     public static final String MyPREFERENCES = "MyPrefs" ;
     private View v;
     private ProgressDialog progressDialog;
+    SimpleDateFormat timeformat;
+    SimpleDateFormat formatto;
 
     public AvisosFixosAuxFragment() {
         // Required empty public constructor
@@ -62,6 +65,8 @@ public class AvisosFixosAuxFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        timeformat = new SimpleDateFormat("HH:mm:ss");
+        formatto = new SimpleDateFormat("HH:mm");
         v = inflater.inflate(R.layout.fragment_tab_horarios_semanais,container,false);
         myContext = getContext();
         sharedpreferences = myContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -110,8 +115,25 @@ public class AvisosFixosAuxFragment extends Fragment {
                                     aviso.setLocal(json.getString("local"));
                                     aviso.setData(json.getString("data"));
                                     aviso.setDatafinal(json.getString("datafinal"));
-                                    aviso.setHora(json.getString("hora"));
-                                    aviso.setHorafinal(json.getString("horafinal"));
+
+                                    if(json.getString("hora") != null && !json.getString("hora").equals("null") && !json.getString("hora").isEmpty()){
+                                        try{
+                                            String time = formatto.format(timeformat.parse(json.getString("hora")));
+                                            aviso.setHora(time);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                            aviso.setHora(json.getString("hora"));
+                                        }
+                                    }
+                                    if(json.getString("horafinal") != null && !json.getString("horafinal").equals("null") && !json.getString("horafinal").isEmpty()){
+                                        try{
+                                            String timefinal = formatto.format(timeformat.parse(json.getString("horafinal")));
+                                            aviso.setHorafinal(timefinal);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                            aviso.setHorafinal(json.getString("horafinal"));
+                                        }
+                                    }
                                     aviso.setObservacao(json.getString("observacao"));
                                     aviso.setContato(json.getString("contato"));
                                     avisosFixos.add(aviso);
@@ -120,7 +142,7 @@ public class AvisosFixosAuxFragment extends Fragment {
                                 int adapterCount = avisoAdapter.getCount();
                                 for (int j = 0; j <adapterCount ; j++) {
                                     View item = avisoAdapter.getView(j, null, null);
-                                    item.findViewById(R.id.hora).setVisibility(View.GONE);
+                                    item.findViewById(R.id.favorite).setVisibility(View.GONE);
                                     mLinearLayout.addView(item);
                                 }
                                 progressDialog.dismiss();

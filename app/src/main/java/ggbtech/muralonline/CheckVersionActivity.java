@@ -46,7 +46,7 @@ public class CheckVersionActivity extends AppCompatActivity {
             editor.commit();
 
             editor.putString("last_createDate","0");
-            editor.putString("urlConsulta","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosTeste.php");
+            editor.putString("urlConsulta","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisos.php");
             editor.putString("urlAvisoFixos","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/consultaAvisosFixos.php");
             editor.putString("urlParceiros","http://ec2-52-67-73-128.sa-east-1.compute.amazonaws.com/muralonline/parceiros/");
             editor.putBoolean("update",false);

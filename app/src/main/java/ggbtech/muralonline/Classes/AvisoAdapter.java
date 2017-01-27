@@ -5,10 +5,13 @@ package ggbtech.muralonline.Classes;
  */
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,15 +62,26 @@ public class AvisoAdapter extends BaseAdapter{
         int foto = list.get(position).getImagem();
         ImageView imagem = (ImageView) layout.findViewById(R.id.foto);
 
-        ImageView fav = (ImageView) layout.findViewById(R.id.favorite);
+        final ImageView fav = (ImageView) layout.findViewById(R.id.favorite);
 
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(checkImageResource(context,fav,R.drawable.ic_favorite_star)){
+                    fav.setImageResource(R.drawable.ic_favorite_star_clicked);
+                    new AlertDialog.Builder(context).setMessage("\tFuncionalidade em desenvolvimento. \n \tAguarde!!!!")
+                            .setTitle("Favorito")
+                            .setCancelable(true)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    })
+                            .setIcon(R.drawable.icon_nossa_senhora).show();
+                }else{
+                    fav.setImageResource(R.drawable.ic_favorite_star);
+                }
             }
         });
-
 
         switch(foto){
             case 1:imagem.setImageResource(R.drawable.logo_pastoral_catequetica);break;
@@ -96,6 +110,7 @@ public class AvisoAdapter extends BaseAdapter{
             case 24:imagem.setImageResource(R.drawable.logo_servidores_altar);break;
             case 25:imagem.setImageResource(R.drawable.logo_pastoral_batismo);break;
             case 26:imagem.setImageResource(R.drawable.logo_pastoral_comunicacao);break;
+            case 27:imagem.setImageResource(R.drawable.ic_logo_aa);break;
 
             case 50:imagem.setImageResource(R.drawable.icon_secretaria);break;
             case 51:imagem.setImageResource(R.drawable.icon_missa);break;
@@ -170,6 +185,29 @@ public class AvisoAdapter extends BaseAdapter{
             horafinal.setVisibility(View.GONE);
         }
         return layout;
+    }
+
+
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    public static boolean checkImageResource(Context ctx, ImageView imageView,int imageResource) {
+        boolean result = false;
+        if (ctx != null && imageView != null && imageView.getDrawable() != null) {
+            Drawable.ConstantState constantState;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                constantState = ctx.getResources()
+                        .getDrawable(imageResource, ctx.getTheme())
+                        .getConstantState();
+            } else {
+                constantState = ctx.getResources().getDrawable(imageResource)
+                        .getConstantState();
+            }
+            if (imageView.getDrawable().getConstantState() == constantState) {
+                result = true;
+            }
+        }
+        return result;
     }
 
 }
