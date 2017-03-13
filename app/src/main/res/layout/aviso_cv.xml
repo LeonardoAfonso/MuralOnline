@@ -66,8 +66,8 @@ android:id="@+id/cv_aviso">
         android:layout_height="wrap_content"
         android:text="datafinal"
         android:id="@+id/datafinal"
-        android:layout_toRightOf="@+id/data"
-        android:layout_below="@+id/local"
+        android:layout_toRightOf="@+id/foto"
+        android:layout_below="@+id/data"
 
         />
 
@@ -77,7 +77,7 @@ android:id="@+id/cv_aviso">
         android:text="hora"
         android:id="@+id/hora"
         android:layout_toRightOf="@+id/foto"
-        android:layout_below="@+id/data"
+        android:layout_below="@+id/datafinal"
         />
 
     <TextView
@@ -86,7 +86,7 @@ android:id="@+id/cv_aviso">
         android:text="horafinal"
         android:id="@+id/horafinal"
         android:layout_toRightOf="@+id/hora"
-        android:layout_below="@+id/data"
+        android:layout_below="@+id/datafinal"
 
         />
 
